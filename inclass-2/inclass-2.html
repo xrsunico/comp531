@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html> 
+<h1>Pizza Guys Order Form</h1>
+<br>
+<img src="http://nitzapizza.com/wp-content/uploads/2011/07/Pizza-capricciosa.jpg" width="188" height="142">
+<form id="pizza_form" method="GET" action="#">
+    <p>Name 
+    <br>
+    <input type="text" required name="your name"></p>
+    <p>Address:####Street Name...
+    <br>
+    <input type="text" name="delivery address"required ></p>
+    <p>Phone Number:123-123-1234
+    <br>
+    <input type="tel"name="123-123-1234" required pattern='\d\d\d-\d\d\d-\d\d\d\d'></p>
+    <p><u>Pizza size</u>
+    <br>
+    <input type="radio" name="size" value="Large">Large
+    <input type="radio" name="size" value="Medium">Medium
+    <input type="radio" name="size" value"Small">Small</p>
+    <p><u>Pizza Toppings</u>
+    <br>
+    <input type="checkbox" name="toppings" value="Sasuage">Sausage
+    <input type="checkbox" name="toppings" value="Olives">Olives
+    <input type="checkbox" name="toppings" value="Onions">Onions</p>
+    <input type="submit" value="PlaceOrder" onclick="return atLeastOneRadio(this.parent)">
+    <input type="reset" value="Clear">
+</form>
+<script>
+function atLeastOneRadio(form){
+    if(!form){
+        form=document.getElementById('pizza_form');
+    }
+    var size1=form.size;
+    checked=false;
+    console.log(form);
+    
+    for(i=0;i<size1.length;i++){
+        if(size1[i].checked){
+            checked=true;
+            break;
+        }
+    }
+    if(!checked){
+        alert('size needed');
+        return false;
+    }
+}
+</script>
+</html>
