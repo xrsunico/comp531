@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Ran Xu">
+    <h1>Registration</h1>
+</head>
+<br>
+<body>
+<form id="registration_form" method="GET" action="formProcessor.html">
+    <p>Account Name
+    <br>
+    <input type="text" required name="user_name"pattern="[0-9a-zA-Z]+"></p>
+    <p>Display Name(optional)
+    <br>
+    <input type="text" name="display_name"></p>
+    <p>Email Address
+    <br>
+    <input type="text" required name="email"></p>
+    <p>Phone Number
+    <br>
+    <input type="tel"required name="phone"  
+    pattern='\d\d\d-\d\d\d-\d\d\d\d'></p>
+    <p>Date of Birth
+    <br>
+    <input type="text" required name="year" pattern='\d\d\d\d'>
+    <input type="text" required name="month"pattern='[0-9]+'>
+    <input type="text" required name="day"pattern='[0-9]+'></p>
+    <p>Zipcode
+    <br>
+    <input type="text" required name="zipcode" pattern="\d\d\d\d\d" ></p>
+    <p>Password
+    <br>
+    <input type="password" required name="psw"></p>
+    <p>Password Confirmation
+    <br>
+    <input type="password" required name="pswc"></p> 
+    <p><input type="hidden"  name="timestamp" value="return getDate(this.parent)"></p>
+    <input type="submit" value="Submit" 
+    onclick="return FormValidation(this.parent)" >
+    <input type="reset" value="Clear">
+</form>
+<script>
+var d = new Date();
+function getDate(){
+    return new Date(d);
+}
+function FormValidation(form){
+    if(!form){
+        form=document.getElementById('registration_form');
+    }
+    var firstChar=form.user_name.value.charAt(0);
+    if(!isNaN(firstChar)){
+        alert("Account name may not start with a number");
+        return false;
+    }
+    if(!form.user_name.value.match(/^[0-9a-zA-Z]+$/)){
+        alert("Account name can only be upper or lower case letters and numbers");
+        return false;
+    }
+    var x = form.email.value;
+    var atpos = x.indexOf("@");
+    var dotpos = x.lastIndexOf(".");
+    if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
+        alert("Not a valid e-mail address");
+        return false;
+    }
+    var birth_year=form.year.value;
+    var age=d.getFullYear()-birth_year;
+    if(form.month.value>12||form.day.value>31){
+        alert("Invalid date!");
+        return false;
+    }
+    if(age<18){
+        alert("You are underage");
+        return false;
+    }
+    if(form.psw.value!=form.pswc.value){
+        alert("Password confirmation is not the same with above");
+        return false;
+    }
+
+}
+</script>
+</body>
+</html>
