@@ -6,7 +6,7 @@
     <h1>Registration</h1>
 </head>
 <br>
-<body>
+<body onload="setTimestamp()">
 <form id="registration_form" method="GET" action="formProcessor.html">
     <p>Account Name
     <br>
@@ -35,15 +35,16 @@
     <p>Password Confirmation
     <br>
     <input type="password" required name="pswc"></p> 
-    <p><input type="hidden"  name="timestamp" value="return getDate(this.parent)"></p>
+    <p><input type="hidden"  name="timestamp" id="timestamp" ></p>
     <input type="submit" value="Submit" 
     onclick="return FormValidation(this.parent)" >
     <input type="reset" value="Clear">
 </form>
+</body>
 <script>
 var d = new Date();
-function getDate(){
-    return new Date(d);
+function setTimestamp(){
+    document.getElementById("timestamp").value=new Date().getTime();
 }
 function FormValidation(form){
     if(!form){
@@ -82,5 +83,4 @@ function FormValidation(form){
 
 }
 </script>
-</body>
 </html>
