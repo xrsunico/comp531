@@ -6,18 +6,36 @@
 </head>
 
 <script>
-    var query=window.location.search.substring(1);
-    var vars=query.split("&");
-    var timestamp=vars[vars.length-1].split("=")[1];
-    var ts=new Date(parseInt(timestamp)).toLocaleString();
-    for(var i=0;i<vars.length-1;i++){
-        var pair=vars[i].split("=");         
-        document.write(pair[0]+":"+decodeURIComponent(pair[1])+"<br>");
-    }
-    document.write("timestamp:"+ts)
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
+var AN=getUrlParameter('AccountName');
+var DN=getUrlParameter('DisplayName');
+var EA=getUrlParameter('EmailAddress');
+var PN=getUrlParameter('phone');
+var y=getUrlParameter('year');
+var m=getUrlParameter('month');
+var d=getUrlParameter('day');
+var ZC=getUrlParameter('zipcode');
+var PW=getUrlParameter('Password');
+var PWC=getUrlParameter('PasswordConfirmation');
+var timestamp=getUrlParameter('timestamp');
+var TS=new Date(parseInt(timestamp)).toLocaleString();
+
 </script>
 <body>
-    <p><script>//document.write("timestamp:"+ts)</script></p>
+    <p><script>document.write("Account Name: "+AN);</script></p>
+    <p><script>document.write("Display Name: "+DN);</script></p>
+    <p><script>document.write("Email Address: "+EA);</script></p>
+    <p><script>document.write("Phone Number: "+PN);</script></p>
+    <p><script>document.write("Date of Birth: "+y+"-"+m+"-"+d);</script></p>
+    <p><script>document.write("Zipcode: "+ZC);</script></p>
+    <p><script>document.write("Password: "+PW);</script></p>
+    <p><script>document.write("Password Confirmation: "+PWC);</script></p>
+    <p><script>document.write("Timestamp: "+TS);</script></p>
  </body>
 
 
