@@ -10,13 +10,13 @@
 <form id="registration_form" method="GET" action="formProcessor.html">
     <p>Account Name
     <br>
-    <input type="text" required name="user_name"pattern="[0-9a-zA-Z]+"></p>
+    <input type="text" required name="AccountName"pattern="[0-9a-zA-Z]+"></p>
     <p>Display Name(optional)
     <br>
-    <input type="text" name="display_name"></p>
+    <input type="text" name="DisplayName"></p>
     <p>Email Address
     <br>
-    <input type="text" required name="email"></p>
+    <input type="text" required name="EmailAddress"></p>
     <p>Phone Number
     <br>
     <input type="tel"required name="phone"  
@@ -31,11 +31,11 @@
     <input type="text" required name="zipcode" pattern="\d\d\d\d\d" ></p>
     <p>Password
     <br>
-    <input type="password" required name="psw"></p>
+    <input type="password" required name="Password"></p>
     <p>Password Confirmation
     <br>
-    <input type="password" required name="pswc"></p> 
-    <p><input type="hidden"  name="timestamp" id="timestamp" ></p>
+    <input type="password" required name="PasswordConfirmation"></p> 
+    <p><input type="hidden"  name="timestamp" id="Timestamp" ></p>
     <input type="submit" value="Submit" 
     onclick="return FormValidation(this.parent)" >
     <input type="reset" value="Clear">
@@ -44,22 +44,22 @@
 <script>
 var d = new Date();
 function setTimestamp(){
-    document.getElementById("timestamp").value=new Date().getTime();
+    document.getElementById("Timestamp").value=new Date().getTime();
 }
 function FormValidation(form){
     if(!form){
         form=document.getElementById('registration_form');
     }
-    var firstChar=form.user_name.value.charAt(0);
+    var firstChar=form.AccountName.value.charAt(0);
     if(!isNaN(firstChar)){
         alert("Account name may not start with a number");
         return false;
     }
-    if(!form.user_name.value.match(/^[0-9a-zA-Z]+$/)){
+    if(!form.AccountName.value.match(/^[0-9a-zA-Z]+$/)){
         alert("Account name can only be upper or lower case letters and numbers");
         return false;
     }
-    var x = form.email.value;
+    var x = form.EmailAddress.value;
     var atpos = x.indexOf("@");
     var dotpos = x.lastIndexOf(".");
     if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
@@ -76,7 +76,7 @@ function FormValidation(form){
         alert("You are underage");
         return false;
     }
-    if(form.psw.value!=form.pswc.value){
+    if(form.Password.value!=form.PasswordConfirmation.value){
         alert("Password confirmation is not the same with above");
         return false;
     }
