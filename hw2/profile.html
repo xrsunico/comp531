@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="author" content="Ran Xu">
+    <meta charset="utf-8">
+	<title>Profile</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="profile.js"></script>
+</head>
+
+<body class="Pbody">
+    <centre>
+    <center><h1>Profile</h1></center>
+    </centre>
+    <table>
+        <tr>
+            <th>Description</th>
+            <th>Input</th>
+            <th>Current Value</th>
+        </tr>
+        <tr>
+            <td>Display Name:</td>
+            <td><input type="text" class="input"name="dispaly_name" id="displayName" placeholder="Only upper/lower case letters and numbers"></td>
+            <td>
+                <span id="cur_name">RanXu123</span>
+            </td>
+        </tr>
+        <tr>
+            <td>Email Address:</td>
+            <td><input type="text" class="input" name="email_address"id="emailAddress" placeholder="#@#.#"></td>
+            <td>
+                <span id="cur_email">rx4@rice.edu</span>
+            </td>
+        </tr>
+        <tr>
+            <td>Phone Number:</td>
+            <td><input type="text" class="input"name="phone_number" id="phoneNumber" placeholder="###-###-####"></td>
+            <td>
+                <span id="cur_phone">123-123-1234</span>
+            </td>
+        </tr>
+        <tr>
+            <td>Zipcode:</td>
+            <td><input type="text" class="input"name="zip_code" id="zipCode" placeholder="######"></td>
+            <td>
+                <span id="cur_zipcode">77030</span>
+            </td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input type="password" class="input"name="password" id="psw" ></td>
+            <td>
+                <span id="cur_psw"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>Password Confirmation:</td>
+            <td><input type="password" class="input"name="password_confirmation" id="pwc"></td>
+            <td>
+                <span id="cur_pwc"></span>
+            </td>
+        </tr>
+    </table>
+    <div class="alert" id="alert_name"></div>
+    <div class="alert" id="alert_email"></div>
+    <div class="alert" id="alert_phone"></div>
+    <div class="alert" id="alert_zip"></div>
+    <div class="alert" id="alert_psw"></div>
+    <div >
+        <center>
+        <input type="submit" class="p_submit"value="Submit"id="submit" >
+        <input type="button" class="p_button"value="Return"id="return">
+        </center>
+    </div>
+</body>
+</html>
