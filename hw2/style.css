@@ -1,0 +1,69 @@
+.card{
+    width:500px;
+    height:400px;
+    border:0.5em solid burlywood;
+    padding:1em;
+    margin:2em;
+}
+.profile{
+    width:80px;
+    height:30px;
+    font-size: 80%;
+    border:0.1em solid slategray;
+}
+.button{
+    width:50px;
+    height:20px;
+    background-color: burlywood;
+    border-bottom-color: black;
+}
+table {
+	width: 100%;
+	border-collapse: separate;
+    border-spacing: 10px 10px;
+    table-layout: fixed;
+    text-align: justify;
+}
+img{
+    width:400px;
+    height:350px;
+}
+span{
+    font-size:120%;
+    font-style:italic;
+    font-weight:bold;
+}
+#cell1{background-color:darkslateblue}
+#cell4{background-color: cadetblue}
+#cell5{background-color: lightyellow}
+#cell8{background-color: lightslategrey}
+#cell9{background-color: seashell}
+.p_submit{
+    width:20%;
+    height:50%;
+    background-color:darkred;
+    border-bottom-color: black;
+    font-weight:bold;
+    font-size:100%;
+    margin-right:400px;
+    margin-top: 200px;
+}
+.p_button{
+    width:20%;
+    height:50%;
+    background-color:darkred;
+    border-bottom-color: black;
+    font-weight:bold;
+    font-size:100%;
+}
+.input{
+    width:400px;
+}
+.Pbody{
+    background-color: lightyellow;
+}
+.alert{
+    font-size: 180%;
+    margin-top: 20px;
+    font-weight: bolder;
+}
