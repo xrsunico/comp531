@@ -5,14 +5,13 @@ window.onload=function(){
     var w = window.innerWidth-start.offsetWidth; 
     var h = window.innerHeight-start.offsetHeight;
     start.style.position="absolute";
-    start.addEventListener("mouseover",avoid,true);
-    start.addEventListener("click",start.onclick,false);
+    start.addEventListener("avoid",avoid,true);
+    start.addEventListener("click",click,false);
 
     start.onclick=function click(){
         if(!clicked){
             clicked=true;
             start.value="Play Again";
-            //start.removeEventListener("end",avoid);
             document.getElementById("box").style.display='';
         }
         else{
