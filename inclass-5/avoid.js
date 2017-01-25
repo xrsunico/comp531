@@ -6,9 +6,9 @@ window.onload=function(){
     var h = window.innerHeight-start.offsetHeight;
     start.style.position="absolute";
     start.addEventListener("avoid",avoid,true);
-    start.addEventListener("click",click,false);
+    start.addEventListener("click",start.onclick,false);
 
-    start.onclick=function click(){
+    start.onclick=function(){
         if(!clicked){
             clicked=true;
             start.value="Play Again";
