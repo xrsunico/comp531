@@ -64,22 +64,9 @@ function updateElement(parent, newNode, oldNode, index=0) {
     if (!oldNode) {
         parent.appendChild(createElement(newNode))
     } else {
-    	if (changed(newNode, oldNode)) {
-            var element = createElement(newNode)
-            Array.prototype.splice(parent.children, index, 0, element)
-        } else if (newNode.children){
-            if (newNode.children >= oldNode.children) {
-                    var i = 0
-                    newNode.children.forEach((c) => {
-                    updateElement(parent.children[index],c,oldNode.children[i],i)
-                    i++
-                })
-            } else {
-                console.log(parent.children[index],newNode, oldNode)
-                parent.removeChild(parent.children[index])
-                parent.appendChild(createElement(newNode))
-            }
-        }
+    	console.log(changed(newNode,oldNode));
+        parent.removeChild(parent.firstChild)
+        parent.appendChild(createElement(newNode))
     }
 }
 
