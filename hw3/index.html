@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="utf-8">
+	<title>Gold Digger</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="index.js"></script>
+    <meta name="author" content="Ran Xu">
+    <meta name="description" content="Gold Digger">
+</head>
+<body>
+    
+<div id = "gameMetrics">
+<span>Game Metrics:</span><br>
+<span> Money: </span>
+<span id = "money">$0</span><br>
+<span> Goal: </span>
+<span id = "goal">$5000</span><br>
+<span> Time left:</span>
+<span id="timer"> 60 sec</span><br>
+<span> Small gold:</span>
+<span id = "gold_small-grab">0</span><br>
+<span> Medium gold:</span>
+<span id = "gold_med-grab">0</span><br>
+<span> Large gold:</span>
+<span id = "gold_big-grab">0</span><br>
+<span> Stone:</span>
+<span id = "rock-grab">0</span><br>
+<span> Mysterious box:</span>
+<span id = "box-grab">0</span><br>
+<span> Missed grab:</span>
+<span id = "missed-grab">0</span><br>
+</div>
+<button type = "button"  id = "easy" onclick="easy()">Easy</button><br>
+<button type = "button"  id = "hard" onclick="hard()">Hard</button><br>
+<div id = "description">
+	<h2>Game Description</h2>
+    <span>(1) Imagine yourself is below the ground </span><br>
+    <span>your vision is the camera on the detector </span><br>
+    <span>and the detector is seeking gold underground </span><br>
+    <span>(2)When the game start, collect as much </span><br>
+	<span>gold as you can</span><br>
+	<span>(3) After current goal is accomplished,</span><br> 
+	<span>the goal will raise</span><br>
+	<span>(4) If you could not earn enough money </span><br>
+	<span>within 60 seconds, the game will be over</span><br>
+    <span>(5) Rock is worth $10 each, small gold $50 each,</span><br>
+    <span>medium gold $100 and big gold $150. The value of</span><br>
+    <span>a mysterious box is random</span>
+</div>
+<div style="position:fixed; top:50px; left:400px;" id = "gamewindow">
+	<canvas width="700" height="500" id="canvas"></canvas>
+</div>
+<div style="position:fixed; top:600px; left:500px;" >
+	<span id = "result" ></span>
+</div>
+<img src="image/hook.png" style = "display : none" id="hook" height="10" width="10" >
+<img src="image/gold_small.png" style = "display : none" id="gold_small" height="50" width="50" >
+<img src="image/gold_med.png" style = "display : none" id="gold_med" height="50" width="50" >
+<img src="image/gold_big.png" style = "display : none" id="gold_big" height="50" width="50" >
+<img src="image/rock.png" style = "display : none" id="rock" height="50" width="50" >
+<img src="image/box.png" style = "display : none" id="box" height="50" width="50" >
+
+</body>
+
+</html>
