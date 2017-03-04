@@ -1,2 +1,4 @@
-# starter
-COMP431/531 Starter
+{
+  "netid": "rx1",
+  "frontend": "http://talented-action.surge.sh/"
+}
