@@ -1,4 +1,4 @@
 {
   "netid": "rx1",
-  "frontend": "http://talented-action.surge.sh/"
+  "frontend": "http://quack-connection.surge.sh/"
 }
