@@ -1,49 +1,28 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import Comment from './comment'
+import Action from '../../actions'
+import SingleArticle from './articlesView'
+import {filterArticles} from './searchArticle'
 
-class Article extends Component {
+export const Article=({article}) =>{
+	return(
+		<div className="row" >
+			<div>
+				{ article.sort((a, b) => {
+							return a.date===b.date?0:a.date<b.date?1:-1
+					}).map(({_id, img, text, author, date})=>(
 
-  constructor(props) {
-    super(props)
-    this.showComment = false
-  }
-
-  render(){
-	  return (
-		  <div className = "card">
-			  <div>
-				<p>{this.props.text}</p>
-				<center>
-				<img className = "card-image" src={this.props.img}/>
-				</center>
-			 </div>
-
-			 <div className="card-button">
-				<label className="btn btn-warning"
-				onClick={() => {
-					this.showComment = !this.showComment
-					this.forceUpdate()
-				}}>
-				{ this.showComment ? 'Show' : 'Hide' } Comments ({
-				  this.props.comments.length })
-				</label>
+						<SingleArticle key={_id} id={_id} img={img} text={text} author={author} date={date}/>
+					))
+				}
 			</div>
-
-			<div className="card-comment">
-			{!this.showComment?'': 
-				this.props.comments.map((comment)=>
-				<Comment key={comment.commentId} date={comment.date} text={comment.text}
-				 author={comment.author}/>
-				)
-			}	
-			</div>	
-
-		  </div>
-	  )
-
-  }
+		</div>
+)
 }
 
-
-export default connect()(Article)
+export default connect(
+	(state) => {
+        return {
+            article: filterArticles(state.article.articles, state.article.keyword)
+        }
+    })(Article)

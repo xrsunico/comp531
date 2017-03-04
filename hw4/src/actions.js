@@ -21,7 +21,6 @@ const Action = {
 	UPDATE_ARTICLES: 'UPDATE_ARTICLES',
 	UPDATE_KEYWORD: 'UPDATE_KEYWORD',
 
-	GET_FOLLOWERS: "get followers",
 	REMOVE_FOLLOWER: "remove follower",
     ADD_FOLLOWER: "add follower",
 }

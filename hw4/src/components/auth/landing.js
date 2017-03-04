@@ -7,6 +7,11 @@ import Register from './register'
 const Landing = ({ errorMsg }) => {
 	return (
 		<div className="profile_page_container">
+			<div className="row">
+				<div className="col-md-10 col-md-offset-1 landing-header"> 
+						<h1>RiceBook</h1>
+				</div>
+			</div>
 
 			<div className="row">
 				<div className="col-md-10 col-md-offset-1">

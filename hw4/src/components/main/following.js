@@ -1,68 +1,56 @@
-import React from 'react'
+import React,{PropTypes } from 'react'
 import { connect } from 'react-redux'
+import SingleFollower from './singleFollower'
+import Action from '../../actions'
+//import {addFollower} from './followingActions'
 
-const Follower = ({ key, username, headline, avatar }) => {
+const Follower = ({ followers, addFollower }) => {
+	let followername
+	const _addFollower=() =>{
+        if(followername){
+            addFollower(followername.value)
+            followername.value=''
+        }
+	}
 	return (
-		<div>
-			<div className="row">
-
-				<div className="col-md-4">
-					<img className="follower-img" src={avatar} />
-				</div>
-
-				<div className="col-md-7 follower-box">
-					<h3>{key}</h3>
-					<h4>{username}</h4>
-					<h5>{headline}</h5>
-				</div>
-
-
-			</div>
-			<div className="row">
-					<hr className="hr-primary" />
-			</div>
-
-
-
-
-
-		</div>
+		<div className="col-md-4" >
+            <div>
+                {
+                    followers.map((follower) => (
+                        <SingleFollower key={follower.id} id={follower.id} 
+						username={follower.username} avatar={follower.avatar} 
+						headline={follower.headline} />
+                    ))
+                }
+            </div>
+            <div className="input-group">
+                <input type="text"  placeholder="Add new friend"
+                ref={(node) => followername = node}/>
+                <span className="input-group-btn">
+                    <input type="button" className="btn"
+                    value="Add" onClick={_addFollower} />
+                </span>
+            </div>
+        </div>
 	)
 }
 
-const FollowingView = ({ followers }) => {
-	console.log(followers)
-	return (
-		<div>
-			<div className="col-md-12">
-			
-			</div>
-
-			{followers.map((follower) => 
-					(<Follower key = {follower.id} 
-							  username = {follower.name} 
-							  avatar = {follower.avatar} 
-							  headline = {follower.headline}
-					/>)
-				)	
-			}
-
-			<div className="row">
-				<div className="col-md-8 col-md-offset-2">
-					<input type="text" placeholder="new friend" />
-					<button> Add </button>
-				</div>
-				
-			</div>
-
-
-		</div>
-	)
-}
+/*Follower.propTypes={
+    followers: PropTypes.arrayOf(PropTypes.shape({
+        ...SingleFollower.propTypes
+    }).isRequired).isRequired,
+    addFollower: PropTypes.func.isRequired
+}*/
 
 export default connect(
-	(state) => {
-		return {
-			followers: state.follow.follower
-		}
-	},)(FollowingView)
+    (state) => {
+        return {
+            followers: state.follow.followers
+        }
+    },
+    (dispatch) => {
+        return {
+            addFollower: (followername) => dispatch({type: Action.ADD_FOLLOWER, username: followername})
+        }
+    }
+)(Follower)

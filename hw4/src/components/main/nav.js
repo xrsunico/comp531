@@ -6,10 +6,12 @@ import { logout } from '../auth/authActions'
 const Nav = ({ toMain, toLanding, toProfile , logout}) => {
 	return (
 		<div className="navi_bar">
-			<button className='btn btn-warning btn-navi'onClick={logout}> Log out 
+			<button className='btn btn-danger btn-navi' onClick={toMain} > Main 
+			</button>
+			<button className='btn btn-warning btn-navi'onClick={logout}> Logout 
 			</button>
 
-			<button className='btn btn-info btn-navi'onClick={toProfile}> Edit Profile 
+			<button className='btn btn-info btn-navi'onClick={toProfile}> Profile 
 			</button>
 		</div>
 	)
@@ -19,6 +21,7 @@ const Nav = ({ toMain, toLanding, toProfile , logout}) => {
 export default connect(null,
 	 (dispatch) => {
 		return {
+			toMain: () => dispatch(nav2Main()),
 			toProfile: () => dispatch(nav2Profile()),
 			logout: () => dispatch(logout())
 		}

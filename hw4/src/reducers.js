@@ -11,7 +11,6 @@ const initialArticles = require('./data/articles.json')
 const initialProfile = require('./data/profile.json')
 
 export const common = (state = commonState, action) => {
-	console.log('sdfdfd')
 	switch(action.type) {
 		case Action.NAV2MAIN : 
 			return {
@@ -39,77 +38,82 @@ export const common = (state = commonState, action) => {
 	}
 }
 
-export const article = (state = {articles: initialArticles.articles}, action) => {
+export const article = (state = {articleID: 1000000, articles: initialArticles.articles,
+	keyword:''}, action) => {
+	let date = new Date()
+	let now = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()
 	switch(action.type) {
 		case Action.UPDATE_ARTICLES :
+			console.long("sf12345")
 			return {
-				...state, articles: action.articles}
+				...state,
+				articleID: state.articleID + 1,
+				articles:[
+					...state, articles,{
+						_id: state.articleId,
+                        text: action.article,
+                        date: now,
+						img:"http://lorempixel.com/311/308/",
+                        author: action.author,
+                        comments: []
+					}
+				],
+				keyword:''
+			}
 		case Action.UPDATE_KEYWORD:
 			return {
 				...state, keyword: action.keyword}
-		default:
-			return state
+		default: return state;
 	}
 }
 
-export const follow = (state = {follower: initialFollowers.followers}, action) => {
+export const follow = (state = {foID:2,followers: initialFollowers.followers}, action) => {
 	switch(action.type) {
 		case Action.UPDATE_FOLLOWER:
 			return {
 				...state, followers: action.followers}
-		case(Action.GET_FOLLOWERS):
-			return {...state,followers: followersjson.following}
 		case(Action.REMOVE_FOLLOWER):
-			return {...state,followers:state.followers.filter(({name}) => 
-					name != action.username)}
+			return {...state,followers:state.followers.filter(({id}) => 
+					id != action.id)}
 		case(Action.ADD_FOLLOWER):
-			return {...state,followers:state.followers.concat([action.follower])}
+			return {foID: state.foID + 1,followers:[...state.followers,
+				{id: state.foID, headline:"new post", username: action.username,
+				avatar:"https://3.bp.blogspot.com/-W__wiaHUjwI/Vt3Grd8df0I/AAAAAAAAA78/7xqUNj8ujtY/s1600/image02.png"
+				}]}
 		default: return state;
 	}
 }
 
 
 export const initProfileState = {
-	username: initialProfile.username, 
-	email: initialProfile.email, 
-	zipcode: initialProfile.zipcode, 
-	avatar: initialProfile.avatar,
-	password: initialProfile.password, 
-	headline: initialProfile.headline,
-	password: initialProfile.password,
-	pwconf: initialProfile.pwconf 
-
+	username: "rx4", 
+	email: "rx4@rice.edu", 
+	birth: "1993-02-12",
+	phone: "123-123-1234",
+	zipcode: "77030", 
+	avatar: "http://www.jqueryscript.net/images/Simplest-Responsive-jQuery-Image-Lightbox-Plugin-simple-lightbox.jpg",
+	password: "123123",
+	headline: "I'm a new coder",
+	pwconf: "123123",
+	location: "PROFILE"
 	}
 
 export const profile = (state = initProfileState,  action) => {
 	switch(action.type) {
-		case Action.LOGIN :
+		/*case Action.LOGIN :
 			return {
-				...state, username: action.username, location: 'MAIN'}
+				...state, username: action.username, location: 'MAIN'}*/
 		case Action.UPDATE_PROFILE :
-			if (action.email) {
-				return {...state, email: action.email}
-			}
-			if (action.zipcode) {
-				return {
-					...state, zipcode: action.zipcode}
-			}
-			if (action.avatar) {
-				return {
-					...state, avatar: action.avatar}
-			}
-			if (action.headline) {
-				return {
-					...state, headline: action.headline}
-			}
-			if (action.dob) {
-				return {...state, dob: action.dob}
-			}
-			if (action.password) {
-				return {...state, dob: action.password}
-			}
-			if (action.pwconf) {
-				return {...state, dob: action.pwconf}
+			return{
+				...state,
+				username: action.username? action.username: state.username,
+                phone: action.phone? action.phone:state.phone,
+                zipcode: action.zipcode?action.zipcode:state.zipcode,
+                email: action.email?action.email:state.email,
+                birth:action.birth?action.birth:state.birth,
+				headline:action.headline?action.headline:state.headline,
+				password: action.password?action.password:state.password,
+				pwconf: action.pwconf?action.pwconf:state.pwconf
 			}
 		default :
 			return state
