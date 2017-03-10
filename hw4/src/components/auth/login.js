@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { login } from './authActions'
 
-const Login=({message, login})  => {
+const Login=({login})  => {
 	const _login=() =>{
 		login(username.value, password.value)
 	}
@@ -22,7 +22,7 @@ const Login=({message, login})  => {
 					Account: 
 				</div>
 				<div className="col-md-8">
-					<input type='text' ref={ (node) => { username = node }}></input>
+					<input type='text' ref={(node) => username = node}></input>
 				</div>
 			</div>
 
@@ -31,7 +31,7 @@ const Login=({message, login})  => {
 					Password: 
 				</div>
 				<div className="col-md-8">
-					<input type='password' ref={(node) => { password = node }}></input>
+					<input type='password' ref={(node) => password = node }></input>
 				</div>
 			</div>
 			
@@ -46,7 +46,7 @@ const Login=({message, login})  => {
 export default connect(
 	(state)=>{
 		return{
-			message: state.common.message
+			message: state.common.message,
 		}
 	},dispatch=>({
 	login:(username, password) =>{

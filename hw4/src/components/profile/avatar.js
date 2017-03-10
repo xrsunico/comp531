@@ -7,7 +7,6 @@ export const Avatar = ({avatar})=>(
 
         <div className="panel-body">
             <div className="form-group">
-                <h> sfsfsf</h>
                 <img src={avatar} className="col-md-12"/>
             </div>
             <div className="form-group">

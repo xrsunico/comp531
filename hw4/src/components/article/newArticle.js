@@ -3,24 +3,16 @@ import { connect} from 'react-redux'
 import Action from '../../actions'
 //import {addArticle} from './articleActions'
 
-export const NewArticle = ({ post}) => {
-    let article
-    const _reset = ()=>{
-        // cancel button to clear the text area
-        article.value = ''
+export const NewArticle = ({ author, addArticle}) => {
+    let newPost
+    const _addArticle = () => {
+        addArticle(newPost.value)
+        newPost.value = ''
     }
-    const _post = () => {
-        // post button to publish an article
-        post(article.value)
-        _reset()
-    }
+    // let newPost
     // const _addArticle=() =>{
-    // //    addArticle(inputArticle.value)
-       
-    //         console.log("sd234t")
-    //         addArticle(author,inputArticle.value)
-        
-    //     inputArticle.value=''
+    //     addArticle(author,newPost.value)
+    //     newPost.value=''
     // }
     return(
         <div className="col-md-6 col-sm-12">
@@ -33,7 +25,7 @@ export const NewArticle = ({ post}) => {
             </div>
             <div className="col-md-6 col-sm-5">
                 <textarea rows="12" cols="40" placeholder="Post new articles"
-                ref={(node) => article = node}>
+                ref={(node) => newPost = node}>
                 </textarea>
             </div>
             <div className="col-md-4 col-sm-4">
@@ -43,8 +35,9 @@ export const NewArticle = ({ post}) => {
             </div>
             <div className="col-md-6 col-sm-6" >
                 <div className="btn-group" role="group" >
-                    <button className="btn btn-success" type="reset"  onClick={ _reset}>Cancel</button>
-                    <button className="btn btn-success" type="submit" onClick={_post}
+                    <button className="btn btn-success" type="reset"  onClick={()=>{newPost.value = ''}}
+                    >Cancel</button>
+                    <button className="btn btn-success" type="submit" onClick={_addArticle}
                     >Post</button>
                 </div>
             </div>
@@ -53,25 +46,21 @@ export const NewArticle = ({ post}) => {
 }
 
 export default connect(
-    (state) => {
-         return {
-            author: state.profile.username
-         },
-   (dispatch)=>{
+   null,
+   (dispatch, ownProps)=>{
         return {
-    // addArticle: (author, inputArticle) => dispatch({ type: Action.UPDATE_ARTICLES, author, inputArticle})
-            post: (article)=> dispatch({type: Action.UPDATE_ARTICLES, article: article, author: author})
-        }
+  
+            addArticle: (article)=> dispatch({type: Action.UPDATE_ARTICLES, article: article, author: ownProps.author})
+        
     }  
 })(NewArticle)
     // (state) => {
     //     return {
-    //         author: state.profile.username
+    //         author: state.common.username
     //     },
     // (dispatch) =>{
     //     return{
-    //         addArticle: (author,inputArticle) => 
-    //     dispatch({ type: Action.UPLOAD_ARTICLES,  author, inputArticle})
+    //         addArticle: (author, article) => dispatch({ type: Action.UPDATE_ARTICLES, author:author, article:article})
     //     }
     // }
     // })(NewArticle)

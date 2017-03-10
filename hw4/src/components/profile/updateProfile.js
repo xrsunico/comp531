@@ -20,11 +20,11 @@ const UpdateProfile = ({errMsg,updateForm}) => {
 	}
 	return (
         <div className="panel panel-default ">
-            <div className="panel-heading"><h2 className="panel-title">Update</h2></div>
+            <div className="panel-heading"><h2>Update</h2></div>
             <div className="panel-body">
-                <form method="GET" action="index.html">
+                <form >
                     <div className="form-group col-md-6">
-                        <label>newUser</label>
+                        <label>Username</label>
                         <input type="text" className="form-control" ref={(node)=>
                         newUsername=node} placeholder="update name" />
                     </div>
@@ -71,10 +71,5 @@ export default connect(
 	}, dispatch =>({
             updateForm: (e, newUsername, newEmail, newPhone, newZip, newPsw, newPwconf) =>{
 			    dispatch(updateForm(e, newUsername, newEmail, newPhone, newZip, newPsw, newPwconf))
-            // updateValidate: (newUsername, newEmail, newPhone, newZip, newPsw, newPwconf)=>
-            // update(newUsername, newEmail, newPhone, newZip, newPsw, newPwconf)(dispatch)
             }
-		/*updateForm: (e, newUsername, newEmail, newPhone, newZip, newPsw, newPwconf) =>{
-			dispatch(updateForm(e, newUsername, newEmail, newPhone, newZip, newPsw, newPwconf))
-		}*/
 	}))(UpdateProfile)

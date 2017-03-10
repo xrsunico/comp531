@@ -14,7 +14,7 @@ export const common = (state = commonState, action) => {
 	switch(action.type) {
 		case Action.NAV2MAIN : 
 			return {
-				...state, location: 'MAIN'}
+				...state, location: 'MAIN', username: action.username}
 		case Action.NAV2PROFILE : 
 			return {
 				...state, location: 'PROFILE'}
@@ -24,15 +24,12 @@ export const common = (state = commonState, action) => {
 		case Action.ERR :
 			return {
 				...state, errMsg: action.errMsg}
-		case Action.SUCCESS :
-			return {
-				...state, updateMsg: action.updateMsg}
 		case Action.LOGOUT:
 			return {
 				...state, location:'LANDING'}
 		case Action.LOGIN :
-			return {
-				...state, username: action.username, message: action.message, location: 'MAIN'}
+			return {			
+				...state, username: action.username,location: 'MAIN'}
 		default :
 			return state
 	}
@@ -40,19 +37,18 @@ export const common = (state = commonState, action) => {
 
 export const article = (state = {articleID: 1000000, articles: initialArticles.articles,
 	keyword:''}, action) => {
-	let date = new Date()
-	let now = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()
+	let date = new Date().toJSON()
+	//let now = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()
 	switch(action.type) {
 		case Action.UPDATE_ARTICLES :
-			console.long("sf12345")
 			return {
 				...state,
 				articleID: state.articleID + 1,
 				articles:[
-					...state, articles,{
-						_id: state.articleId,
+					...state.articles,{
+						_id: state.articleID,
                         text: action.article,
-                        date: now,
+                        date: date,
 						img:"http://lorempixel.com/311/308/",
                         author: action.author,
                         comments: []
@@ -68,6 +64,7 @@ export const article = (state = {articleID: 1000000, articles: initialArticles.a
 }
 
 export const follow = (state = {foID:2,followers: initialFollowers.followers}, action) => {
+
 	switch(action.type) {
 		case Action.UPDATE_FOLLOWER:
 			return {
@@ -99,6 +96,7 @@ export const initProfileState = {
 	}
 
 export const profile = (state = initProfileState,  action) => {
+//console.log(username)
 	switch(action.type) {
 		/*case Action.LOGIN :
 			return {
@@ -115,6 +113,7 @@ export const profile = (state = initProfileState,  action) => {
 				password: action.password?action.password:state.password,
 				pwconf: action.pwconf?action.pwconf:state.pwconf
 			}
+			console.log(username)
 		default :
 			return state
 	}

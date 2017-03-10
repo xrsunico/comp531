@@ -2,10 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Action, {resource} from '../../actions'
 
-export const addArticle=(inputArticle)=>{
-	return ({type: Action.UPDATE_ARTICLES, article: inputArticle})
+export function addArticle(inputArticle, author){
+	return ({type: Action.UPDATE_ARTICLES, article: newPost, author: username})
 }
 
-export function searchKeyword(keyword){
-	return {type:Action.UPDATE_KEYWORD, keyword};
-}

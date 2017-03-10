@@ -19,10 +19,10 @@ export const ProfileForm = ({username, email, phone, zipcode, birth})=>(
 export default connect(
 	(state) => {
 		return {
+            username: state.profile.username,
 			email: state.profile.email,
 			birth: state.profile.birth,
             phone: state.profile.phone,
-			zipcode: state.profile.zipcode,
-			username: state.profile.username,
+			zipcode: state.profile.zipcode
 		}	
     })(ProfileForm)

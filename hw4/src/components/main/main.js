@@ -5,8 +5,9 @@ import Headline from './headline'
 import Following from './following'
 import Nav from '../main/nav'
 import NewArticle from '../article/newArticle'
+import SearchArticle from '../article/searchArticle'
 
-const Main = () => {
+const Main = ({username}) => {
 	return (
 		<div className ="container">
 			<nav className="navbar navbar-default">
@@ -24,11 +25,12 @@ const Main = () => {
 			</div>
 			<div className="page-head col-md-9">
 				<div className="row">
-					<NewArticle/>
+					<NewArticle author ={username}/>
 				</div>
 			</div>
 			<div className="page-body col-md-9">
 				<div className="row">
+					<SearchArticle/>
 					<Article />
 				</div>
 

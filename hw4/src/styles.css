@@ -99,11 +99,6 @@
 	text-decoration: underline;
 }
 
-.landing-error-msg {
-	font-style: italic;
-	color: black;
-	background-color: #ffcccc;
-}
 
 .hr-primary {
 	border: black solid 0.5px;
@@ -147,15 +142,6 @@
 	margin-bottom: 10px;
 }
 
-.footer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 0.3rem;
-  background-color: #efefef;
-  text-align: center;
-}
 
 
 .main-header {
@@ -167,8 +153,4 @@
 	background-color: darkslategray;
 	margin-top: 30px;
 	margin-bottom: 1px;
-}
-
-tr.spaced-row > td{
-	padding-top: 20px;
 }

@@ -8,8 +8,7 @@ import {validateProfile } from '../profile/profileActions'
 export function login(username, password) {
     
 		if (username != '' && password != '') {
-			let message = "Successfully logged in"
-			return ({type: Action.LOGIN, message})
+			return ({type: Action.LOGIN,  username})
 		}else{
 			let message = "Invalid logging "
 			return ({type: Action.ERR, message})

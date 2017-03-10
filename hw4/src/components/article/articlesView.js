@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 
 export const SingleArticle =({img,text,date,author })=> (
 	<div className="row">
-        <div className="col-md-12">
+        <div className="col-md-10">
             <div className="card">
-                {img?<img className="card-img-top" src={img} />:null}
+                <img className="card-img" src={img} />
                 <div className="card-block">
                     <h className="card-title">{author}</h>
                     <h className="card-text">{date}</h>

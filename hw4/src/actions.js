@@ -1,10 +1,3 @@
-export const FILTER_KEYWORD = "FILTER_KEYWORD";
-export const ADD_ARTICLE = "ADD_ARTICLE";
-import fetch from 'isomorphic-fetch'
-
-const localTest = false
-export const url = localTest ? 'http://localhost:1111' : 'https://webdev-dummy.herokuapp.com'
-
 
 const Action = {
 	LOGIN: 'LOGIN',
