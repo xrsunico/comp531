@@ -4,11 +4,6 @@ let articles = [
     {id: 3, text:"qwrte", author:"sunico"}
 ]
 
-const helloUser = (req, res) => {
-	const user = req.params.user || 'Somebody'
-	res.send('Hello ' + user + '!')
-}
-
 const getArticle = (req, res) => {
 	console.log(articles)
 	if(req.params.id){
