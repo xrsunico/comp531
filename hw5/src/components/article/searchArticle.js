@@ -2,11 +2,11 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import {updateKeyword} from './articleActions'
 
-export const SearchArticle = ({articles, dispatch}) =>{
+export const SearchArticle = ({filter}) =>{
     let searchInput
 	const _search=() =>{
-		if (searchInput.value){
-			updateKeyword(searchInput.value)
+		if (searchInput){
+			filter(searchInput.value)
 		}
 	}
 	return(
@@ -19,21 +19,22 @@ export const SearchArticle = ({articles, dispatch}) =>{
     )
 }
 
-
-export function filterArticles(keyword){
-
-    if(keyword){
-        articles = articles.filter((element) => {
-			return element.text.toLowerCase().indexOf(keyword.toLowerCase()) >= 0 ||
-				   element.author.toLowerCase().indexOf(keyword.toLowerCase()) >= 0
+export function filterArticles(articles, filter){
+    if(filter){
+        return articles.filter((element) => {
+			console.log(element.text.toLowerCase())
+			return element.text.toLowerCase().includes(filter.toLowerCase()) ||
+				element.author.toLowerCase().includes(filter.toLowerCase())
 		})
     }else{
         return articles
     }
+	console.log(articles)
 }
 
-export default connect((state) => {
-	return {
-		articles: filterArticles( state.articles.keyword)
-    }
-})(SearchArticle)
+export default connect(
+	null,
+	(dispatch) => ({
+		filter: (keyword) => dispatch(updateKeyword(keyword))
+	})
+    )(SearchArticle)

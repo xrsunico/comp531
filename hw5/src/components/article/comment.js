@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 //the comment component
 const Comment = ({author,date, text}) => {
     return(
-        <div>
+        <div className="row">
             <h><bold>{author}</bold></h>
             <h>{date}</h>
             <p>{text}</p> 

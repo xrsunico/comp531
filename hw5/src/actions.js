@@ -1,25 +1,24 @@
 import fetch from 'isomorphic-fetch'
 
 const local = false
-export const url = local ? 'http://localhost:8080' : 'https://webdev-dummy.herokuapp.com'
+export const url =  'https://webdev-dummy.herokuapp.com'
 
 const Action = {
 	LOGIN: 'LOGIN',
 	LOGOUT: 'LOGOUT',
 	ERR: 'ERROR',
 	SUCCESS: 'SUCCESS', 
-
 	NAV2MAIN: 'NAV2MAIN',
 	NAV2LANDING: 'NAV2LANDING',
 	NAV2PROFILE: 'NAV2PROFILE',
-
 	UPDATE_PROFILE: 'UPDATE_PROFILE',
 	UPDATE_FOLLOWER: 'UPDATE_FOLLOWER',
 	UPDATE_ARTICLE: 'UPDATE_ARTICLE',
+	ADD_ARTICLE: 'ADD_ARTICLE',
 	UPDATE_KEYWORD: 'UPDATE_KEYWORD',
-
 	REMOVE_FOLLOWER: "REMOVE_FOLLOWER",
     ADD_FOLLOWER: "ADD_FOLLOWER",
+	SHOW_COMMENT:"SHOW_COMMENT"
 }
 export default Action
 
@@ -36,12 +35,12 @@ export function nav2Landing() {
 }
 
 
-export function showError(errMsg) {
-	return {type: Action.ERR, msg: errMsg}
+export function showError(message) {
+	return {type: Action.ERR, errMsg: message}
 }
 
-export function showSuccess(sucMsg) {
-	return {type: Action.SUCCESS, msg: sucMsg}
+export function showSuccess(message) {
+	return {type: Action.SUCCESS, sucMsg: message}
 }
 
 export function resource(method, endpoint, payload) {
@@ -57,6 +56,7 @@ export function resource(method, endpoint, payload) {
             return (response.headers.get('Content-Type').indexOf('json') > 0) ? 
 					response.json() : response.text()
         } else {
+			console.error(`${method} ${endpoint} ${response.statusText}`)
             throw new Error(response.statusText)
         } 
     })

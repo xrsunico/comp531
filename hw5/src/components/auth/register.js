@@ -2,8 +2,7 @@ import React , { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { registerCheck } from './authActions'
 
-const register=({errMsg,registerCheck})  => {
-	//let event
+const register=({dispatch})  => {
 	let username
 	let email 
 	let phone 
@@ -12,7 +11,9 @@ const register=({errMsg,registerCheck})  => {
 	let password 
 	let pwconf 
 	const _check=(e) =>{
-		registerCheck( e, username.value, email.value, phone.value, birth.value, zipcode.value, password.value, pwconf.value)
+		e.preventDefault()
+		dispatch(registerCheck(username.value, email.value, phone.value, 
+		birth.value, zipcode.value, password.value, pwconf.value))
 	}
 
     return (
@@ -70,7 +71,7 @@ const register=({errMsg,registerCheck})  => {
 					</div>
 					<div className="col-md-8">
 						<input type="text" name="test" size="30" placeholder="update zipcode"
-						placeholder = "xxxxx" ref={(node) => zipcode = node} required>
+						placeholder = "xxxxx or xxxxx-xxxx" ref={(node) => zipcode = node} required>
 						</input>
 					</div>
 				</div>
@@ -93,9 +94,6 @@ const register=({errMsg,registerCheck})  => {
 						 ref={(node) => pwconf = node} required>
 						</input>
 					</div>
-					<div className="col-md-4">
-						{errMsg}
-					</div>
 				</div>
 				<div className="row register-input-row">
 				</div>
@@ -115,12 +113,13 @@ const register=({errMsg,registerCheck})  => {
 }
 
 export default connect(
-	(state)=>{
-		return{
-			errMsg: state.common.errMsg
-		}
-	}, dispatch=>({
-		registerCheck:( e,username, email, phone, birth, zipcode, password, pwconf) =>{
-		dispatch(registerCheck(e,username, email, phone, birth, zipcode, password, pwconf))
-	}
-}))(register)
+// 	(state)=>{
+// 		return{
+// 			errMsg: state.common.errMsg
+// 		}
+// 	}, dispatch=>({
+// 		registerCheck:(username, email, phone, birth, zipcode, password, pwconf) =>{
+// 		dispatch(registerCheck(e,username, email, phone, birth, zipcode, password, pwconf))
+// 	}
+// })
+)(register)

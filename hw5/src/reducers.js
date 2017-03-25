@@ -6,12 +6,12 @@ export const commonState = {
 	sucMsg: '',
 	errMsg: ''
 }
-const initialFollowers = require('./data/followers.json')
-const initialArticles = require('./data/articles.json')
-const initialProfile = require('./data/profile.json')
 
 export const common = (state = commonState, action) => {
 	switch(action.type) {
+		case Action.LOGIN :
+			return {			
+				...state, username: action.username}
 		case Action.NAV2MAIN : 
 			return {
 				...state, location: 'MAIN', username: action.username}
@@ -24,19 +24,18 @@ export const common = (state = commonState, action) => {
 		case Action.ERR :
 			return {
 				...state, errMsg: action.errMsg}
+		case Action.SUCCESS :
+			return {
+				...state, sucMsg: action.sucMsg}
 		case Action.LOGOUT:
 			return {
-				...state, location:'LANDING'}
-		case Action.LOGIN :
-			return {			
-				...state, username: action.username,location: 'MAIN'}
+				...state, username:''}
 		default :
 			return state
 	}
 }
 
-export const articleState = {articleID: 1000000, articles: initialArticles.articles,
-	keyword:''}
+export const articleState = {articleID: 100000, articles: [], keyword:''}
 export const article = (state = articleState, action) => {
 	let date = new Date().toDateString()
 	switch(action.type) {
@@ -44,18 +43,30 @@ export const article = (state = articleState, action) => {
 			return {
 				...state,
 				articleID: state.articleID + 1,
-				articles:[
-					...state.articles,{
-						_id: state.articleID,
-                        text: action.article,
-                        date: date,
-						img:"http://lorempixel.com/311/308/",
-                        author: action.author,
-                        comments: []
-					}
-				],
+				articles: action.articles.map((element)=>{
+					return {...element, showComment:false}}),
 				keyword:''
 			}
+		case Action.ADD_ARTICLE:
+			return{
+				...state,
+				articles:[
+					...state.articles,
+					{...action.article, showComment:false}],
+				keyword:''
+			}
+		case Action.SHOW_COMMENT:{
+			return{
+				...state,
+				articles:state.articles.map((element)=>{
+					if(element._id == action.id){
+						return {...element, showComment:!element.showComment}
+					}else{
+						return element
+					}
+				})
+			}
+		}
 		case Action.UPDATE_KEYWORD:
 			return {
 				...state, keyword: action.keyword}
@@ -63,21 +74,24 @@ export const article = (state = articleState, action) => {
 	}
 }
 
-export const followState = {foID:2,followers: initialFollowers.followers}
+export const followState = {}
 export const follow = (state = followState, action) => {
 
 	switch(action.type) {
 		case Action.UPDATE_FOLLOWER:
 			return {
-				...state, followers: action.followers}
+				...state, 
+				followers: action.followers,
+			}
 		case(Action.REMOVE_FOLLOWER):
-			return {...state,followers:state.followers.filter(({id}) => 
-					id != action.id)}
-		case(Action.ADD_FOLLOWER):
-			return {foID: state.foID + 1,followers:[...state.followers,
-				{id: state.foID, headline:"new post", username: action.username,
-				avatar:"https://3.bp.blogspot.com/-W__wiaHUjwI/Vt3Grd8df0I/AAAAAAAAA78/7xqUNj8ujtY/s1600/image02.png"
-				}]}
+		console.log(action.name)
+			return {...state,followers: state.followers.filter((item) => 
+				item.name != action.name)}
+		// case(Action.ADD_FOLLOWER):
+		// 	return {foID: state.foID + 1,followers:[...state.followers,
+		// 		{id: state.foID, headline:"new post", username: action.username,
+		// 		avatar:"https://3.bp.blogspot.com/-W__wiaHUjwI/Vt3Grd8df0I/AAAAAAAAA78/7xqUNj8ujtY/s1600/image02.png"
+		// 		}]}
 		default: return state;
 	}
 }
@@ -89,32 +103,30 @@ export const profileState = {
 	birth: "",
 	phone: "",
 	zipcode: "", 
-	avatar: "",
+	avatar: undefined,
 	password: "",
 	headline: "",
 	pwconf: "",
-	location: "PROFILE"
 	}
 
 export const profile = (state = profileState,  action) => {
-//console.log(username)
 	switch(action.type) {
-		/*case Action.LOGIN :
-			return {
-				...state, username: action.username, location: 'MAIN'}*/
+		case Action.LOGIN :
+			return {			
+				...state, username: action.username}
 		case Action.UPDATE_PROFILE :
 			return{
 				...state,
 				username: action.username? action.username: state.username,
                 phone: action.phone? action.phone:state.phone,
                 zipcode: action.zipcode?action.zipcode:state.zipcode,
+				avatar: action.avatar?action.avatar:state.avatar,
                 email: action.email?action.email:state.email,
                 birth:action.birth?action.birth:state.birth,
 				headline:action.headline?action.headline:state.headline,
 				password: action.password?action.password:state.password,
 				pwconf: action.pwconf?action.pwconf:state.pwconf
 			}
-			console.log(username)
 		default :
 			return state
 	}

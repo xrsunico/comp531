@@ -2,18 +2,21 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import Action from '../../actions'
 import SingleArticle from './singleArticle'
+import {updateComment} from './articleActions'
 import {filterArticles} from './searchArticle'
 
-export const ArticlesView=({article}) =>{
+export const ArticlesView=({articleSet,displayComment}) =>{
+	
 	return(
 		<div className="row" >
 			<div>
-				{ article.sort((a, b) => {
+				{ articleSet.sort((a, b) => {
 							return a.date===b.date?0:a.date<b.date?1:-1
-					}).map(({_id, img, text, author, date})=>(
-
-						<SingleArticle key={_id} id={_id} img={img} text={text} 
-						author={author} date={date} />
+					})
+					.map(({_id, author, date, text, comments, showComment})=>(	
+						<SingleArticle key={_id} id={_id} author={author} date={date} 
+						text={text} comments={comments} showComment ={showComment} 
+						displayComment={displayComment}  />
 					))
 				}
 			</div>
@@ -23,7 +26,13 @@ export const ArticlesView=({article}) =>{
 
 export default connect(
 	(state) => {
-        return {
-            article: filterArticles(state.article.articles, state.article.keyword)
+        return {			
+            articleSet: filterArticles(state.article.articles, state.article.keyword)
         }
-    })(ArticlesView)
+	}
+	,(dispatch)=>{
+		return{
+			displayComment: (id)=>dispatch(updateComment(id))
+		}
+	}
+    )(ArticlesView)

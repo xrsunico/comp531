@@ -1,19 +1,14 @@
 import React,{Component, PropTypes} from 'react'
 import { connect} from 'react-redux'
 import Action from '../../actions'
-//import {addArticle} from './articleActions'
+import {addArticles} from './articleActions'
 
-export const NewArticle = ({ author, addArticle}) => {
+export const NewArticle = ({ author, postArticle}) => {
     let newPost
-    const _addArticle = () => {
-        addArticle(newPost.value)
+    const _postArticle = () => {
+        postArticle(author, newPost.value)
         newPost.value = ''
     }
-    // let newPost
-    // const _addArticle=() =>{
-    //     addArticle(author,newPost.value)
-    //     newPost.value=''
-    // }
     return(
         <div className="col-md-6 col-sm-12">
             <div  className="col-md-4 col-sm-5">
@@ -37,7 +32,7 @@ export const NewArticle = ({ author, addArticle}) => {
                 <div className="btn-group" role="group" >
                     <button className="btn btn-success" type="reset"  onClick={()=>{newPost.value = ''}}
                     >Cancel</button>
-                    <button className="btn btn-success" type="submit" onClick={_addArticle}
+                    <button className="btn btn-success" type="submit" onClick={_postArticle}
                     >Post</button>
                 </div>
             </div>
@@ -46,21 +41,12 @@ export const NewArticle = ({ author, addArticle}) => {
 }
 
 export default connect(
-   null,
-   (dispatch, ownProps)=>{
+   (state)=>{
+		return {author:state.profile.username}
+	},
+   (dispatch)=>{
         return {
-  
-            addArticle: (article)=> dispatch({type: Action.UPDATE_ARTICLE, article: article, author: ownProps.author})
+            postArticle: (author,newPost)=> (addArticles(author, newPost))(dispatch)
         
     }  
 })(NewArticle)
-    // (state) => {
-    //     return {
-    //         author: state.common.username
-    //     },
-    // (dispatch) =>{
-    //     return{
-    //         addArticle: (author, article) => dispatch({ type: Action.UPDATE_ARTICLES, author:author, article:article})
-    //     }
-    // }
-    // })(NewArticle)

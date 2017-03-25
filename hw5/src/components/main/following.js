@@ -2,9 +2,9 @@ import React,{PropTypes } from 'react'
 import { connect } from 'react-redux'
 import SingleFollower from './singleFollower'
 import Action from '../../actions'
-//import {addFollower} from './followingActions'
+import {addFollower} from './followingActions'
 
-const Follower = ({ followers, addFollower }) => {
+const Following = ({ follow, addFollower}) => {
 	let followername
 	const _addFollower=() =>{
         if(followername){
@@ -12,15 +12,20 @@ const Follower = ({ followers, addFollower }) => {
             followername.value=''
         }
 	}
+    console.log(follow)
 	return (
 		<div className="col-md-4" >
             <div>
                 {
-                    followers.map((follower) => (
-                        <SingleFollower key={follower.id} id={follower.id} 
-						username={follower.username} avatar={follower.avatar} 
-						headline={follower.headline} />
+                    Object.keys(follow)
+                    .map((followername)=>follow[followername])
+                    .map((element) =>(
+                    <SingleFollower key={element.name} 
+                    name={element.name} avatar={element.avatar} 
+                    headline={element.headline} />
+                    
                     ))
+                    
                 }
             </div>
             <div className="input-group">
@@ -33,24 +38,22 @@ const Follower = ({ followers, addFollower }) => {
             </div>
         </div>
 	)
+    
 }
-
-/*Follower.propTypes={
-    followers: PropTypes.arrayOf(PropTypes.shape({
-        ...SingleFollower.propTypes
-    }).isRequired).isRequired,
-    addFollower: PropTypes.func.isRequired
-}*/
 
 export default connect(
     (state) => {
+        
         return {
-            followers: state.follow.followers
+            follow: state.follow.followers
         }
-    },
+        console.log()
+    }
+    ,
     (dispatch) => {
         return {
-            addFollower: (followername) => dispatch({type: Action.ADD_FOLLOWER, username: followername})
+            addFollower: (followername) => dispatch(addFollower(followername))
         }
     }
-)(Follower)
+    
+)(Following)

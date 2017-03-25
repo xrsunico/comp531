@@ -2,11 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { login } from './authActions'
 
-const Login=({login})  => {
+const Login=({ login,dispatch})  => {
+	let username, password
 	const _login=() =>{
 		login(username.value, password.value)
 	}
-	let username, password
 
 	return (
 		<div>
@@ -44,12 +44,10 @@ const Login=({login})  => {
 
 
 export default connect(
-	(state)=>{
-		return{
-			message: state.common.message,
-		}
-	},dispatch=>({
-	login:(username, password) =>{
-		dispatch(login(username, password))
-	}
-}))(Login)
+	null,
+	(dispatch)=>{
+        return{
+            login: (username, password)=> dispatch(login(username, password))
+        }
+    }
+)(Login)

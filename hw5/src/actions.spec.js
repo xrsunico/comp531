@@ -33,16 +33,14 @@ describe('Validate actions ', () => {
         resource('GET', 'resource').then((response) => {
             expect(response.msg).to.eql('msg')
         })
-        .then(done)
-        .catch(done)
+        done()
     })
 
     it('resource should give me the http error', (done) => {
-        resource('GET', 'resource').catch((err) => {
+        resource('GET', 'err').catch((err) => {
             expect(err).to.exist
         })
-        .then(done)
-        .catch(done)
+        done()
     })
 
     it('resource should be POSTable', (done) => {
@@ -60,22 +58,22 @@ describe('Validate actions ', () => {
 
     it('should update error message', (done) => {
         let errTest = 'new error';
-        expect(showError(msg)).to.eql({ 
-            type: Action.ERROR, errMsg: errTest 
+        expect(showError(errTest)).to.eql({ 
+            type: Action.ERR, errMsg: errTest 
         })
         done()
     })
 
     it('should update success message', (done) => {
         let sucTest = 'new success';
-        expect(showSuccess(msg)).to.eql({
+        expect(showSuccess(sucTest)).to.eql({
             type: Action.SUCCESS, sucMsg: sucTest 
         })
         done()
     })
 
     it('should navigate', (done) => {
-        expect(nav2Landing()).to.eql({ type: Action.NAV2LANGING })
+        expect(nav2Landing()).to.eql({ type: Action.NAV2LANDING })
         expect(nav2Main()).to.eql({ type: Action.NAV2MAIN })
         expect(nav2Profile()).to.eql({ type: Action.NAV2PROFILE })
         done()

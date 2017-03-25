@@ -1,17 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {updateForm} from './profileActions'
+import {updateProfile} from './profileActions'
 
 const UpdateProfile = ({errMsg,updateForm}) => {
-	let newUsername
 	let newEmail 
 	let newPhone 
 	let newZip 
 	let newPsw 
 	let newPwconf 
 	const _update=(e) =>{
-		updateForm(e, newUsername.value, newEmail.value, newPhone.value,newZip.value, newPsw.value, newPwconf.value)
-        newUsername.value=''
+        e.preventDefault()
+		updateForm(e, newEmail.value, newPhone.value,newZip.value, newPsw.value, newPwconf.value)
+
         newEmail.value=''
         newZip.value =''
         newPsw.value = ''
@@ -23,11 +23,6 @@ const UpdateProfile = ({errMsg,updateForm}) => {
             <div className="panel-heading"><h2>Update</h2></div>
             <div className="panel-body">
                 <form >
-                    <div className="form-group col-md-6">
-                        <label>Username</label>
-                        <input type="text" className="form-control" ref={(node)=>
-                        newUsername=node} placeholder="update name" />
-                    </div>
                     <div className="form-group col-md-6">
                         <label>Email</label>
                         <input type="text" className="form-control" ref={(node)=>
@@ -64,12 +59,9 @@ const UpdateProfile = ({errMsg,updateForm}) => {
 }
 
 export default connect(
-	(state) => {
-		return {
-			errMsg: state.common.errMsg,
-		}	
-	}, dispatch =>({
-            updateForm: (e, newUsername, newEmail, newPhone, newZip, newPsw, newPwconf) =>{
-			    dispatch(updateForm(e, newUsername, newEmail, newPhone, newZip, newPsw, newPwconf))
+	null
+    , dispatch =>({
+            updateForm: ( newEmail, newZip, newPsw, newPwconf) =>{
+			    dispatch(UpdateProfile( newEmail, newZip, newPsw, newPwconf))
             }
 	}))(UpdateProfile)

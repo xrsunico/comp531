@@ -1,55 +1,82 @@
-import Action, { nav2Landing, nav2Main, updateError, resource } from '../../actions'
-import { getProfile, getHeadline} from '../profile/profileActions'
-//import {getFollowers} from '../main/followingActions'
-import { getArticles } from '../article/articleActions'
-import Promise from 'bluebird'
-import {validateProfile } from '../profile/profileActions'
+import Action, { nav2Landing, nav2Main, showError, showSuccess,resource } from '../../actions'
+import { fetchAvatar, fetchEmail, fetchBirth, fetchZipcode, fetchHeadline} from '../profile/profileActions'
+import { fetchFollowers} from '../main/followingActions'
+import { fetchArticles } from '../article/articleActions'
 
 export function login(username, password) {
-    
-		if (username != '' && password != '') {
-			return ({type: Action.LOGIN,  username})
-		}else{
-			let message = "Invalid logging "
-			return ({type: Action.ERR, message})
-		}
-    
-	
+    return (dispatch) => {
+        return resource('POST', 'login', { username, password })
+            .then((r) => {
+                dispatch({ type: Action.LOGIN, username: r.username })
+				// console.log(username)
+                dispatch(preLog(username))
+            }).catch((err) => {
+				dispatch({ type: Action.ERR, errMsg: 'Error login' })
+            })
+    }
 } 
 
+export function preLog(username) {
+    return (dispatch) => {
+        return Promise.all([
+			fetchAvatar(username)(dispatch),
+			fetchEmail(username)(dispatch),
+			fetchBirth()(dispatch),
+			fetchZipcode(username)(dispatch),
+			fetchHeadline(username)(dispatch),
+			fetchArticles()(dispatch),
+			fetchFollowers(username)(dispatch)
+		])
+		.then(()=>{
+			dispatch(nav2Main())
+		})
+    }
+}
+
 export function logout() {
-		return ({type: Action.LOGOUT})
+	return (dispatch) => {
+		return resource('PUT', 'logout')
+		.then((r) => {
+			dispatch({type: Action.LOGOUT})
+		})
+		.then((r) => {
+			dispatch(nav2Landing())
+		})
+	}
 }
 
 
-export function registerCheck (e, username, email, phone, birth, zipcode, password, pwconf) {
-		e.preventDefault()
-
+export function registerCheck (username, email, phone, birth, zipcode, password, pwconf) {
+	return (dispatch) =>{
         if (!(username&&email&&phone&&birth&&zipcode&&password&&pwconf)) {
-			return ({type: Action.ERR, errMsg: 'Registration information not complete'})
+			return dispatch (showError("Registration information not complete"))
 		}
 		if(username&&email&&phone&&birth&&zipcode&&password&&pwconf){
-			if (!username.match('^[a-zA-Z][a-zA-Z0-9]*')) {
-				return ({type: Action.ERR, errMsg: 'Invalid username. Upper case and lower case letters and numbers only; Starts with a letter'})
+			if (!username.match("^[a-zA-Z][a-zA-Z0-9]*")) {
+				return dispatch(showError("Invalid username. Upper case and lower case letters and numbers only; Starts with a letter"))
 			}    	
-			if (!email.match('^[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z][a-zA-Z]+$')) {
-				return ({type: Action.ERR, errMsg: 'Invalid email. e.g. :@b.edu/a@b.co'})
+			if (!email.match("^[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z][a-zA-Z]+$")) {
+				return dispatch (showError("Invalid email. e.g. :@b.edu/a@b.co"))
 			}	
-			if (!phone.match('^([0-9]{3})+\-+([0-9]{3})+\-+([0-9]{4})$')) {
-				return ({type: Action.ERR, errMsg:'Invalid phone. e.g.: ###-###-####'})
+			if (!phone.match("^([0-9]{3})+\-+([0-9]{3})+\-+([0-9]{4})$")) {
+				return dispatch (showError("Invalid phone. e.g.: ###-###-####'"))
 			}
 			if (!validateBirth(birth)) {
-				return ({type: Action.ERR, errMsg:'Invalid birth. You should be older than 18'})
+				return dispatch (showError("Invalid birth. You should be older than 18"))
 			}
-			if (!zipcode.match('^([0-9]{5})')) {
-				return ({type: Action.ERR, errMsg:'Invalid zipcode. e.g.: #####'})
+			if (!zipcode.match("^(([0-9]{5})|([0-9]{5})+\-+([0-9]{4}))$")) {
+				return dispatch (showError("Invalid zipcode. e.g.: ##### or #####-####"))
 			}
 			if (password !== pwconf) {
-				return ({type: Action.ERR, errMsg:'Password do not match'})
+				return dispatch (showError("Password do not match"))
+			}else{
+				resource('POST', 'register',{username, email, phone, birth, zipcode, password, pwconf})
+			.then((r)=>{
+				dispatch (showSuccess("Congratulations! Registered successfully! "))
+			})
 			}
-			return ({type: Action.LOGIN})
 		}
-	
+	}
 }
 
 function validateBirth(date) {

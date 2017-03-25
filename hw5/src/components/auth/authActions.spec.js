@@ -33,20 +33,18 @@ describe('Validate Authentication', () => {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
             json: { username, result: 'success' }
         })
-
         login(username, password)(
             (action) => {
-                expect(action).to.eql({
-                    type: Action.LOGIN, username
-                })
+                if (action.type === Action.LOGIN) {
+                expect(action.username).to.eql(username)
                 done()
-            }
-        )
+                }
+            })
     })
 
     it('should not log in an invalid user', (done) => {
-        const username2 = 'ab12'
-        const password2 = 'qwer'
+        const username2 = 'ab!@'
+        const password2 = 'qwertyu'
 
         mock(`${url}/login`, {
             method: 'POST', headers: { 'Content-Type': 'text/plain'},
@@ -55,8 +53,7 @@ describe('Validate Authentication', () => {
 
         login(username2, password2)(
             (action) => {
-                expect(action).to.eql(Action.ERR);
-                expect(action.errMsg).to.eql('Invalid login ' + username);     
+                expect(action).to.eql({ type: 'ERROR', errMsg: 'Error login' })
                 done()
         })
     })
@@ -69,12 +66,7 @@ describe('Validate Authentication', () => {
 
         logout()(
             (action) => {
-                if (action.type === Action.LOGOUT) {
                     expect(action).to.eql({ type: Action.LOGOUT })
-                }
-                else if (action.type === Action.NAV2LANDING) {
-                    expect(action).to.eql({ type: Action.NAV2LANDING });
-                }
                 done()
             })
     })

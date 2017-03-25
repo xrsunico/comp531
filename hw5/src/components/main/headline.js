@@ -7,6 +7,7 @@ export const headline = ({avatar, username, headline, updateHeadline}) =>{
     let text
     const _updateHeadline=() =>{
 		updateHeadline(text.value)
+        text.value = ''
 	}
     return (
         <div className="col-md-2 col-sm-12" id="headlinePart">
@@ -34,7 +35,7 @@ export default connect(
 }, (dispatch) => {
 	return {
 		updateHeadline: (text) =>{
-            dispatch(updateHeadline(text))
+            (updateHeadline(text))(dispatch)
         }
 	}
 })(headline)
