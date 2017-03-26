@@ -30,6 +30,7 @@ const Main = ({username}) => {
 			</div>
 			<div className="page-body col-md-9">
 				<div className="row">
+				<h>sdgag</h>
 					<SearchArticle/>
 					<Article />
 				</div>

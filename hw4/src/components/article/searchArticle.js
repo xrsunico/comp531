@@ -30,6 +30,6 @@ export const filterArticles = (articles,articleText) => {
 
 export default connect(null,(dispatch)=>{
     return {
-        filter: (searchInput) => dispatch({type: Action.UPDATE_KEYWORD, keyword: searchInput})
+        filter: (keyword) => dispatch({type: Action.UPDATE_KEYWORD, keyword: keyword})
     }
 })(SearchArticle)

@@ -53,65 +53,57 @@ export function fetchZipcode (item) {
         })
 }
 
-
+var flag = true
 export function updateProfile( newEmail, newZip,  newPsw, newPwconf){
-	
-		const err = checkForm({newEmail, newZip, newPsw, newPwconf})
-        if (err.length > 0) {
-            return dispatch(showError(err))
-        }
-		
+	return (dispatch) =>{
+        if (checkForm(newEmail, newZip, newPsw, newPwconf,dispatch)) {
+			console.log(newPsw)
 			if(newEmail){
 				resource('PUT','email',{email: newEmail})
 				.then((r)=>{
 					console.log(r)
-					dispatch({type: Action.UPDATE_PROFILE, email: r.newEmail})
+					 dispatch({type: Action.UPDATE_PROFILE, email: r.email})
+					 dispatch(showSuccess('Email updated successfully'))
 				})
 			}
 			if(newZip){
-				resource('PUT','zipcode',{zipcode: newZipcode })
+				resource('PUT','zipcode',{zipcode: newZip })
 				.then((r)=>{
-					dispatch({type: Action.UPDATE_PROFILE, zipcode: r.newZip})
+					dispatch({type: Action.UPDATE_PROFILE, zipcode: r.zipcode})
+					dispatch(showSuccess('Zipcode updated successfully'))
 				})
 			}
-			// if(newPhone){
-			// 	resource('PUT','phone')
-			// 	.then((r)=>{
-			// 		dispatch({type: Action.UPDATE_PROFILE, phone: r.newPhone})
-			// 	})
-			// }
 			if(newPsw){
-				resource('PUT','password')
+				resource('PUT','password',{password:newPsw})
 				.then((r)=>{
-					dispatch({type: Action.UPDATE_PROFILE, password: r.newPsw})
+					dispatch({type: Action.UPDATE_PROFILE, password: r.password})
+					dispatch(showSuccess('Password cannot be changed'))
 				})
 			}
-		
-	
+	}
+	}
 }
  
-export function checkForm(newEmail,  newZip, newPsw, newPwconf){
-	return (dispatch) =>{
+export const checkForm=(newEmail,  newZip, newPsw, newPwconf,dispatch)=>{
 	if (newEmail) {
 		if (!newEmail.match('^[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z][a-zA-Z]+$')) {
-			return dispatch(showError('Invalid email. e.g.: a@b.cd'))
+			flag = false
+			dispatch(showError('Invalid email. e.g.: a@b.cd'))
 			
 		}
 	}
-	// if (newPhone) {
-	// 	if (!newPhone.match('^([0-9]{3})+\-+([0-9]{3})+\-+([0-9]{4})$')) {
-	// 		return 'Invalid phone. e.g.: ###-###-####'
-	// 	}
-	// }
 	if (newZip) {
 		if (!newZip.match('^(([0-9]{5})|([0-9]{5})+\-+([0-9]{4}))$')) {
-			return dispatch(showError('Invalid zipcode. e.g.:xxxxx or xxxxx-xxxx'))
+			flag = false
+			 dispatch(showError('Invalid zipcode. e.g.:xxxxx or xxxxx-xxxx'))
 		}
 	}
 	if (newPsw || newPwconf) {
 		if (newPsw !== newPwconf) {
-			return dispatch(showError('Password do not match'))
+			flag = false
+			 dispatch(showError('Password do not match'))
 		}
 	}
-}
+	return true
+// }
 }

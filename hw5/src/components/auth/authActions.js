@@ -53,6 +53,7 @@ export function registerCheck (username, email, phone, birth, zipcode, password,
 		}
 		if(username&&email&&phone&&birth&&zipcode&&password&&pwconf){
 			if (!username.match("^[a-zA-Z][a-zA-Z0-9]*")) {
+				console.log(username)
 				return dispatch(showError("Invalid username. Upper case and lower case letters and numbers only; Starts with a letter"))
 			}    	
 			if (!email.match("^[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z][a-zA-Z]+$")) {

@@ -117,9 +117,12 @@ export default connect(
 // 		return{
 // 			errMsg: state.common.errMsg
 // 		}
-// 	}, dispatch=>({
-// 		registerCheck:(username, email, phone, birth, zipcode, password, pwconf) =>{
+// 	null
+// 	, (dispatch)=>{
+// 		return{
+// 		registerCheck:(username, email, phone, birth, zipcode, password, pwconf) =>
 // 		dispatch(registerCheck(e,username, email, phone, birth, zipcode, password, pwconf))
-// 	}
-// })
+// 			}
+		
+// }
 )(register)

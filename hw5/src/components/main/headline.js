@@ -28,7 +28,7 @@ export const headline = ({avatar, username, headline, updateHeadline}) =>{
 export default connect(
 	(state) => {
 	return {
-		username : state.common.username,
+		username : state.profile.username,
 		headline: state.profile.headline,
 		avatar: state.profile.avatar
 	}
