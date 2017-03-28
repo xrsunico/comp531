@@ -1,4 +1,4 @@
 {
   "netid": "rx4",
-  "backend": "mongodb://heroku_71dshz3t:lts8hbgp6it5u0i93a4u37or0l@ds143900.mlab.com:43900/heroku_71dshz3t"
+  "mongourl": "mongodb://heroku_71dshz3t:lts8hbgp6it5u0i93a4u37or0l@ds143900.mlab.com:43900/heroku_71dshz3t"
 }
