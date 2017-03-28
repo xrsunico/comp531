@@ -53,57 +53,51 @@ export function fetchZipcode (item) {
         })
 }
 
-var flag = true
 export function updateProfile( newEmail, newZip,  newPsw, newPwconf){
 	return (dispatch) =>{
-        if (checkForm(newEmail, newZip, newPsw, newPwconf,dispatch)) {
-			console.log(newPsw)
-			if(newEmail){
-				resource('PUT','email',{email: newEmail})
-				.then((r)=>{
-					console.log(r)
-					 dispatch({type: Action.UPDATE_PROFILE, email: r.email})
-					 dispatch(showSuccess('Email updated successfully'))
-				})
-			}
-			if(newZip){
-				resource('PUT','zipcode',{zipcode: newZip })
-				.then((r)=>{
-					dispatch({type: Action.UPDATE_PROFILE, zipcode: r.zipcode})
-					dispatch(showSuccess('Zipcode updated successfully'))
-				})
-			}
-			if(newPsw){
-				resource('PUT','password',{password:newPsw})
-				.then((r)=>{
-					dispatch({type: Action.UPDATE_PROFILE, password: r.password})
-					dispatch(showSuccess('Password cannot be changed'))
-				})
-			}
-	}
+		const err = checkForm(newEmail, newZip, newPsw, newPwconf,dispatch)
+		if(err){
+			return err
+		}
+		if(newEmail){
+			resource('PUT','email',{email: newEmail})
+			.then((r)=>{
+				console.log(r)
+					dispatch({type: Action.UPDATE_PROFILE, email: r.email})
+					dispatch(showSuccess('Email updated successfully'))
+			})
+		}
+		if(newZip){
+			resource('PUT','zipcode',{zipcode: newZip })
+			.then((r)=>{
+				dispatch({type: Action.UPDATE_PROFILE, zipcode: r.zipcode})
+				dispatch(showSuccess('Zipcode updated successfully'))
+			})
+		}
+		if(newPsw){
+			resource('PUT','password',{password:newPsw})
+			.then((r)=>{
+				dispatch({type: Action.UPDATE_PROFILE, password: r.password})
+				dispatch(showSuccess('Password cannot be changed'))
+			})
+		}
 	}
 }
  
-export const checkForm=(newEmail,  newZip, newPsw, newPwconf,dispatch)=>{
+const checkForm=(newEmail,  newZip, newPsw, newPwconf,dispatch)=>{
 	if (newEmail) {
 		if (!newEmail.match('^[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z][a-zA-Z]+$')) {
-			flag = false
-			dispatch(showError('Invalid email. e.g.: a@b.cd'))
-			
+			dispatch(showError('Invalid email. e.g.: a@b.cd'))			
 		}
 	}
 	if (newZip) {
 		if (!newZip.match('^(([0-9]{5})|([0-9]{5})+\-+([0-9]{4}))$')) {
-			flag = false
 			 dispatch(showError('Invalid zipcode. e.g.:xxxxx or xxxxx-xxxx'))
 		}
 	}
 	if (newPsw || newPwconf) {
 		if (newPsw !== newPwconf) {
-			flag = false
 			 dispatch(showError('Password do not match'))
 		}
 	}
-	return true
-// }
 }

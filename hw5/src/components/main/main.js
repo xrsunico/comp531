@@ -7,7 +7,7 @@ import Nav from '../main/nav'
 import NewArticle from '../article/newArticle'
 import SearchArticle from '../article/searchArticle'
 
-const Main = ({username}) => {
+const Main = ({username, errMsg, sucMsg}) => {
 	return (
 		<div className ="container">
 			<nav className="navbar navbar-default">
@@ -22,6 +22,13 @@ const Main = ({username}) => {
 				<div className="row">
 					<Following/>
 				</div>
+				<div className="row">
+				<div className="col-md-4 col-md-offset-1"> 
+					{errMsg == '' ? '' : <div className="landing-error-ms"> {errMsg} </div>}
+					{sucMsg == '' ? '' : <div className="landing-success-ms"> {sucMsg} </div>}
+				</div>
+				
+			</div>
 			</div>
 			<div className="page-head col-md-9">
 				<div className="row">
@@ -35,10 +42,17 @@ const Main = ({username}) => {
 				</div>
 
 			</div>
+			
 
     </div>
 		
 	)
 }
 
-export default connect()(Main)
+export default connect(
+	(state) => {
+	return {
+		errMsg: state.common.errMsg,
+		sucMsg: state.common.sucMsg
+	}
+},)(Main)

@@ -30,7 +30,7 @@ const register=({dispatch})  => {
 						Account: 
 					</div>
 					<div className="col-md-8">
-						<input type="text" name="test" size="30" placeholder="update account name"
+						<input type="text" name="test" size="30" placeholder="account name"
 						ref={(node) => username = node} required>
 						</input>
 					</div>
@@ -40,7 +40,7 @@ const register=({dispatch})  => {
 						Email: 
 					</div>
 					<div className="col-md-8">
-						<input type="text" name="test" size="30" placeholder="update email Address"
+						<input type="text" name="test" size="30" placeholder="Input email address, e.g.: a@b.c"
 						 ref={(node) => email = node} required>
 						</input>
 					</div>
@@ -50,7 +50,7 @@ const register=({dispatch})  => {
 						Date of Birth: 
 					</div>
 					<div className="col-md-8">
-						<input type="date" name="test" size="30" placeholder="update date of birth"
+						<input type="date" name="test" size="30" placeholder="Input date of birth"
 						format="mm/dd/yyyy"  ref={(node) => birth = node} required>
 						</input>
 					</div>
@@ -60,7 +60,7 @@ const register=({dispatch})  => {
 						Phone: 
 					</div>
 					<div className="col-md-8">
-						<input type="text" name="test" size="30" placeholder="update phone number"
+						<input type="text" name="test" size="30" 
 						 placeholder = "xxx-xxx-xxxx" ref={(node) => phone = node} required>
 						</input>
 					</div>
@@ -70,7 +70,7 @@ const register=({dispatch})  => {
 						Zipcode: 
 					</div>
 					<div className="col-md-8">
-						<input type="text" name="test" size="30" placeholder="update zipcode"
+						<input type="text" name="test" size="30" 
 						placeholder = "xxxxx or xxxxx-xxxx" ref={(node) => zipcode = node} required>
 						</input>
 					</div>
@@ -80,7 +80,7 @@ const register=({dispatch})  => {
 						Password: 
 					</div>
 					<div className="col-md-8">
-						<input type="password" name="test" size="30" placeholder="update password"
+						<input type="password" name="test" size="30" placeholder="Input password"
 						 ref={(node) => password = node} required>
 						</input>
 					</div>
@@ -90,7 +90,7 @@ const register=({dispatch})  => {
 						Password Confirmation: 
 					</div>
 					<div className="col-md-8">
-						<input type="password" name="test" size="30" placeholder="confirm password"
+						<input type="password" name="test" size="30" placeholder="Confirm password"
 						 ref={(node) => pwconf = node} required>
 						</input>
 					</div>

@@ -35,7 +35,7 @@ export const common = (state = commonState, action) => {
 	}
 }
 
-export const articleState = {articleID: 100000, articles: [], keyword:''}
+export const articleState = {articleID: 0, articles: [], keyword:''}
 export const article = (state = articleState, action) => {
 	let date = new Date().toDateString()
 	switch(action.type) {
@@ -83,15 +83,6 @@ export const follow = (state = followState, action) => {
 				...state, 
 				followers: action.followers,
 			}
-		case(Action.REMOVE_FOLLOWER):
-		console.log(action.name)
-			return {...state,followers: state.followers.filter((item) => 
-				item.name != action.name)}
-		// case(Action.ADD_FOLLOWER):
-		// 	return {foID: state.foID + 1,followers:[...state.followers,
-		// 		{id: state.foID, headline:"new post", username: action.username,
-		// 		avatar:"https://3.bp.blogspot.com/-W__wiaHUjwI/Vt3Grd8df0I/AAAAAAAAA78/7xqUNj8ujtY/s1600/image02.png"
-		// 		}]}
 		default: return state;
 	}
 }

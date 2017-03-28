@@ -13,7 +13,7 @@ export function fetchFollowers(username) {
 			const followerSet = r.following.join(',')
 			const foHeadline = resource('GET',`headlines/${followerSet}`)
 			.then((headR) => {
-				console.log(headR)
+				// console.log(headR)
 				headR.headlines.forEach((element) =>{
 					followers[element.username].headline = element.headline
 				})
@@ -40,10 +40,8 @@ export function fetchFollowers(username) {
 export function removeFollower(followername){
 	console.log(followername)
 	return (dispatch) => 
-		dispatch({ type: Action.REMOVE_FOLLOWER, followername })
 		resource('DELETE', `following/${followername}`)
 		.then((r) => {
-			console.log(r)
 			const followers = r.following.reduce((follower, element) => {
 				follower[element] = { name: element }; 
 				return follower
@@ -77,9 +75,11 @@ export function removeFollower(followername){
 
 export function addFollower(followername){
 	return (dispatch)=>
-		//const followerName = followername.value
-		resource('PUT', `following/${followerName}`)
+		resource('PUT', `following/${followername}`)
 			.then((r) => {
+				if(r.following.indexOf(followername)<0){
+					return dispatch(showError(`User ${followername} does not exist`))
+				}
 				const followers = r.following.reduce((follower, element) => {
 					follower[element] = { name: element }; return follower
 				}, {}
@@ -99,10 +99,6 @@ export function addFollower(followername){
 					})
 					return avatarR
 				})
-				// const articlesInfo = resource('GET', `articles/${name.value}`)
-				// 	.then((r) => {
-				// 		dispatch({ type: Action.UPDATE_ARTICLE, articles: r.articles })
-				// 	})
 				return Promise.all([foHeadline, foAvatar])
 					.then(() => {
 						dispatch({ type: Action.UPDATE_FOLLOWER, followers })

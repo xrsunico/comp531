@@ -66,8 +66,8 @@ describe('Validate Authentication', () => {
 
         logout()(
             (action) => {
-                    expect(action).to.eql({ type: Action.LOGOUT })
-                done()
+                    expect(action.type === Action.LOGOUT || action.type === Action.NAV2LANDING).to.be.true
             })
+             done()
     })
 })
