@@ -2,7 +2,7 @@ const md5 = require('md5')
 const cookieParser = require('cookie-parser')
 
 const cookieKey = 'sid'
-const user:{users:[]}
+const user={users:[]}
 
 function register(req, res) {
 	var username = req.body.username;
