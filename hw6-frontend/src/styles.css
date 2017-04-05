@@ -1,0 +1,96 @@
+.hr-primary {
+	border: black solid 0.5px;
+}
+
+.follower-img {
+	width: 100px;
+}
+.profile-img {
+	width: 100px;
+}
+.navi_bar {
+	background-color: darkslategray;
+	border: solid black 1pt;
+	border-radius: 10px;
+	align-content: center;
+	vertical-align: middle;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-top: 30px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+}
+.btn-navi {
+	border: solid black 1pt;
+	margin-left: 20px;
+	margin-bottom: 10px;
+	margin-top: 20px;
+}
+.btn-group{
+	margin-right:5px;
+}
+.btn {
+	border: solid black 1pt;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	color:darkslategray;
+	background-color: floralwhite;
+	align-content: center
+}
+
+.comment-author-container {
+	background-color:#ffff99;
+	margin-top: 5px;
+}
+.comment-author {
+	font-weight: bold;
+}
+
+.comment-content {
+	background-color: #ffffcc;
+}
+
+.article-container {
+	border-radius: 5px;
+	background-color: #f4fef4;
+}
+
+.landing-header {
+	color: white;
+	padding-bottom: 10px;
+	border-radius: 10px;
+	text-align: center;
+	align-content: center;
+	background-color: darkslategray;
+	margin-top: 35px;
+	margin-bottom: 35px;
+	width: 80%
+}
+
+.profile-header {
+	color: white;
+	padding-bottom: 10px;
+	border-radius: 10px;
+	text-align: center;
+	align-content: center;
+	background-color: darkslategray;
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+
+
+
+.main-header {
+	color: white;
+	padding-bottom: 10px;
+	border-radius: 10px;
+	text-align: center;
+	align-content: center;
+	background-color: darkslategray;
+	margin-top: 40px;
+	margin-bottom: 15px;
+}
+.card-article{
+	background-color: lightsteelblue
+}
