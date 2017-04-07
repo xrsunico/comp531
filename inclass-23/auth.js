@@ -93,25 +93,23 @@ function login  (req, res) {
     var username = req.body.username;
 	var password = req.body.password;
 	if(!username || !password){
-		res.sendStatus(400).send("Username or password missing")
+		res.status(400).send("Username or password missing")
 		return
 	}
 	var userObj = User[req.body.username]
 	if(!userObj){
-		res.sendStatus(401).send("Invalid user")
+		res.status(401).send("Invalid user")
 		return
 	}
 	if(userObj.hash == md5(password+userObj.salt)){
-		res.cookie(cookieKey, generateCode(userObj),
-		{maxAge: 3600*1000, httpOnly: true})
 		var msg = {username:userObj.username, result: 'success'}
 		res.send(msg)
 	}
 	else {
-		res.sendStatus(401).send("Password error")
-	}
-    
+		res.status(401).send("Password error")
+	} 
 }
+
 
 function logoutDefault (req, res) {
     res.status(200).send('Logged out')
