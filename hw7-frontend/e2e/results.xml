@@ -1,0 +1,19 @@
+
+> starter@1.0.0 e2e:base /Users/Sunico/Documents/Rice/Spring17/531/comp531/hw6/frontend
+> mocha --opts e2e/mocha.opts e2e/*.spec.js "--reporter" "xunit"
+
+<testsuite name="Mocha Tests" tests="13" failures="0" errors="0" skipped="0" timestamp="Wed, 05 Apr 2017 21:41:47 GMT" time="101.653">
+<testcase classname="Test Dummy Server Landing Page" name="should register a new user" time="9.167"/>
+<testcase classname="Test Dummy Server Landing Page" name="should log in as your test user" time="9.371"/>
+<testcase classname="Test Main Page article" name="should create a new article and validate the article appears in the feed" time="29.455"/>
+<testcase classname="Test Main Page article" name="should edit an article and validate the article text has updated" time="1.726"/>
+<testcase classname="Test Main Page article" name="should update the headline and verify the change" time="2.688"/>
+<testcase classname="Test Main Page article" name="should count the number of followed users" time="0.546"/>
+<testcase classname="Test Main Page article" name="should add the user and verify the count increases by one" time="14.702"/>
+<testcase classname="Test Main Page article" name="should remove the user and verify the count decreases by one" time="10.618"/>
+<testcase classname="Test Main Page article" name="should search and verify only one article shows, and verify the author" time="1.913"/>
+<testcase classname="Test Dummy Server Profile Page" name="should update the user email and verify" time="2.685"/>
+<testcase classname="Test Dummy Server Profile Page" name="should update the zipcode and verify" time="1.038"/>
+<testcase classname="Test Dummy Server Profile Page" name="should update the password and verify a &quot;will not change&quot; message is returned" time="2.621"/>
+<testcase classname="shutdown" name="now" time="0.068"/>
+</testsuite>
