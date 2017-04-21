@@ -11,14 +11,15 @@ const config = {
     clientID: '1249125958488894', 
     callbackURL: 'http://localhost:3000/auth/callback' }
 
+const hello = (req, res) => res.status(200).send({ hello: 'world' })
 module.exports = app => {
+    app.get('/', hello)
     app.post('/register', register)
 ///console.log('adding login', login)
     app.post('/login', login)
 	app.use(isLoggedIn)
     app.put('/password',putPassword)
     app.put('/logout', isLoggedIn, logout)
-	app.use('/logout',logout)
 	app.use('/profile',isLoggedIn,profile)
 }
 
