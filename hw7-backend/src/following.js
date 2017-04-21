@@ -1,15 +1,16 @@
 var Profile = require('./model.js').Profile
 
 function getFollowing(req, res) {
-    var username = req.params.user ? req.params.user : req.user
+    // console.log("1")
+    var username = req.params.user ? req.params.user : req.username
     Profile.find({username: username}).exec(function(err, elements){
         if (err || elements.length == 0){
             console.log(err)
             return
-        }
+        }else{
         res.status(200).send({username: username, 
              following: elements[0].following})
-        
+        }        
     })
 }
 
@@ -50,6 +51,8 @@ function putFollowing(req, res) {
                         })                
                     }
                     else{
+                        console.log(username)
+                        console.log(newfollow)
                         res.status(400).send('Already followed')
                         return
                     }           

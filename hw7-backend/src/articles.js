@@ -51,56 +51,50 @@ const editArticle = (req, res) =>{
 
         if (req.body.commentId){
             if (req.body.commentId == -1){
-                var commId = new ObjectId()
-                const newComment = new Comments({commentId: commId, author:req.user, 
+                console.log("dssag")
+                var commId = md5(req.username + new Date().getTime())
+                const newComment = new Comments({commentId: commId, author:req.username, 
                     date: new Date(), text: req.body.text})
-                var comm = articles[0].comments
-                comm.push(newComment)
-
-                Article.update({_id: elements[0]._id}, {$set: {comments: comm}}, function(err, ele){
-                    console.log(ele)
-                    if (err){
-                        console.log(err)
-                        return
-                    }
-                    Article.find({_id: req.params.id}).exec(function(exception, ele){
-                        res.status(200).send({articles: [ele[0]]})        
-                        return
-                    })      
-                })
+                    new Comments(newComment).save(function(err, object){
+                    if(err) throw err
+                 })
+                console.log(newComment)
+                Article.findByIdAndUpdate(req.params.id, {$addToSet: {comments: newComment}},
+                {upsert:true, new:true}, function(err, ele){})
+                    Article.find({_id:req.params.id}).exec(function(err, ele){
+                    res.status(200).send({articles: [[ele[0]]]})
+            })
             }
             else{            
-                Article.update({_id: elements[0]._id, 'comments.commentId' : req.body.commentId}, 
-                {$set: {'comments.$.text':req.body.text}}, function(err, ele){
-                    if (err){
-                        console.log(err)
-                        return
+                Comments.find({commentId: req.body.commentId}).exec(function(err, element){
+                    if(elements == undefined || elements.length === 0 ){
+                        res.status(400).send("Comment not found")
+                    }else if(element[0].author == req.username ){
+                        Comments.update({commentId: req.body.commentId},
+                            { $set: {text:req.body.text}}, {new:true}, function(err, item){})
+                        Article.update({_id: req.params.id, 'comments.commentId':req.body.commentId},
+                            {$set:{'comments.$.text':req.body.text}}, {new: true}, function(err, ele){})
+                        Article.find({_id: req.params.id}).exec(function(err, ele){
+                            res.status(200).send({articles: ele})
+                        })
                     }
-                    Article.find({_id: elements[0]._id}).exec(function(exception, ele){
-                        res.status(200).send({articles: [ele[0]]})        
-                        return
-                    })                
                 })
             }
         }
         else{
-            Article.update({_id: elements[0]._id}, {$set: {text : req.body.text}}, function(err){
-                if (err){
-                    console.log(err)
-                    return
-                }
-                Article.find({_id: elements[0]._id}).exec(function(exception, ele){
-                        res.status(200).send({articles: [ele[0]]})        
-                        return
-                    }) 
-            })
+            if(elements[0].author == req.username){
+                Article.findByIdAndUpdate(id, {$set: {text:req.body.text}}, {new: true},
+                    function(err, item){
+                    res.status(200).send({articles: item})
+                })
+            }
         }
 
 
     })
 }
 module.exports = (app) => {
-    app.put('/articles/:id/', editArticle)
+    app.put('/articles/:id', editArticle)
     app.get('/articles/:id*?',getArticle)
     app.post('/article', addArticle)
 }

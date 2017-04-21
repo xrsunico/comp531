@@ -9,11 +9,11 @@ const getHeadlines = (req, res) => {
 		if (!elements || elements.length == 0){
 			res.status(400).send("Unauthorized")
 			return
-		}
-		var headlines = elements.map((item)=>{
+		}else
+		{var headlines = elements.map((item)=>{
 			return {username: item.username, headline:item.headline}
 		})
-		res.status(200).send({headlines})
+		res.status(200).send({headlines})}
 	})
 }
 
@@ -138,9 +138,10 @@ const putAvatar = (req, res) => {
 
 const getDob = (req, res) => {
 	var username = req.params.user ? req.params.user : req.username
+	console.log(username)
 	Profile.find({username: username}).exec(function(err, elements){
 		if (err || elements.length == 0){
-			console.log(err)
+			console.log(elements)
 			res.status(400).send("Unauthorized")
 			return
 		}

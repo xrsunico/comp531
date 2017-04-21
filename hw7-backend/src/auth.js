@@ -1,13 +1,6 @@
 var md5 = require('md5')
 var redis = require('redis')
 .createClient("redis://h:p53a914b9b9ab65cda8b7fc7edfb916c9c17b1859907da165de434093ae6a3545@ec2-34-206-56-163.compute-1.amazonaws.com:36219")
-var request = require('request')
-var qs = require('querystring')
-var express = require('express')
-var cookieParser = require('cookie-parser')
-var session =require('express-session')
-var passport = require('passport')
-var FacebookStrategy = require('passport-facebook').Strategy;
 var User = require('./model').User
 var Profile = require('./model').Profile
 var users = [];
@@ -20,6 +13,7 @@ const config = {
 
 module.exports = app => {
     app.post('/register', register)
+///console.log('adding login', login)
     app.post('/login', login)
 	app.use(isLoggedIn)
     app.put('/password',putPassword)
@@ -89,7 +83,8 @@ function fail(req, res) {
 
 function register (req, res) {
 	var username = req.body.username
-    var dob = new Date(req.body.dob)
+    var dob = new Date(req.body.birth)
+    console.log(dob)
     var email = req.body.email
     var zipcode = req.body.zipcode
     var password = req.body.password
@@ -134,8 +129,8 @@ function register (req, res) {
 function login  (req, res) {
     var username = req.body.username;
 	var password = req.body.password;
-    console.log("username")
-    console.log(req.username)
+    // console.log("username")
+    // console.log(req.username)
 	if(!username || !password){
         
 		res.status(400).send("Username or password missing")
@@ -169,7 +164,6 @@ function login  (req, res) {
 function putPassword (req,res) {
 	var password = req.body.password
 	var username = req.username
-    console.log(username)
 	if(!password){
 		res.status(400).send('No password input')
 		return

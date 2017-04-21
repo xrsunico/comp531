@@ -9,17 +9,17 @@ var userSchema = new mongoose.Schema({
 })
 
 var commentSchema = new mongoose.Schema({
-	commentId: Number,
+	commentId: String,
 	author: String,
     text: String,
-	date: Date
+	date: String
 })
 
 var articleSchema = new mongoose.Schema({
-	id: Number,
+	id: String,
 	author: String,
 	text: String,
-    date: Date,
+    date: String,
     img: String, 
 	comments: [ commentSchema ]
 })
@@ -31,7 +31,7 @@ var profileSchema = new mongoose.Schema({
 	email: String,
 	zipcode: String,
 	avatar: String,
-    dob: Date
+    dob: String
 })
 
 exports.User = mongoose.model('users', userSchema)
