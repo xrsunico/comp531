@@ -1,6 +1,6 @@
 var md5 = require('md5')
 var redis = require('redis')
-.createClient("redis://h:p53a914b9b9ab65cda8b7fc7edfb916c9c17b1859907da165de434093ae6a3545@ec2-34-206-56-163.compute-1.amazonaws.com:36219")
+.createClient("redis://h:p43d0afd2c59d46379608c96285e4a7890400df637a5e60190a83e3f21772dcc2@ec2-34-206-56-140.compute-1.amazonaws.com:29939")
 var User = require('./model').User
 var Profile = require('./model').Profile
 var users = [];
@@ -18,36 +18,10 @@ module.exports = app => {
 	app.use(isLoggedIn)
     app.put('/password',putPassword)
     app.put('/logout', isLoggedIn, logout)
-
-    app.use(session({secret:'thisIsMySecret'}))
-	app.use(passport.initialize())
-	app.use(passport.session())
-    app.use(cookieParser())
-
-	app.use('/login/facebook', passport.authenticate('facebook', {scope:'email'}))
-	app.use('/auth/callback', passport.authenticate('facebook', 
-    {successRedirect:'/profile', failureRedirect:'/fail'}))
 	app.use('/logout',logout)
 	app.use('/profile',isLoggedIn,profile)
 }
 
-
-passport.serializeUser(function(user, done) {
-	users[user.id] = user
-	done(null, user.id)
-})
-
-passport.deserializeUser(function(id, done) {
-	var user = users[id]
-	done(null)
-})
-
-passport.use(new FacebookStrategy(config,
- function(token, refreshToken, profile, done) {
- 	process.nextTick(function() {
- 		return done(null, profile)
- 	})
- }))
 
 function logout(req, res) {
 	redis.del(req.cookies[cookieKey])
