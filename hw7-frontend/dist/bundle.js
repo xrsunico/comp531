@@ -24939,7 +24939,7 @@
 	
 		switch (action.type) {
 			case _actions2.default.LOGIN:
-				return _extends({}, state, { username: action.username });
+				return _extends({}, state, { username: action.username, password: action.password });
 			case _actions2.default.NAV2MAIN:
 				return _extends({}, state, { location: 'MAIN', username: action.username });
 			case _actions2.default.NAV2PROFILE:
@@ -24982,7 +24982,6 @@
 				{
 					var _newArticles = state.articles;
 					var _newArticle = action.article;
-					_newArticle['showComment'] = false;
 					// console.log(newArticles)
 					_newArticles[_newArticles.length] = _newArticle;
 					return _extends({}, state, {
@@ -25092,8 +25091,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var local = false;
-	var url = exports.url = 'https://webdev-dummy.herokuapp.com';
+	var url = exports.url = 'http://localhost:3000';
 	
 	var Action = {
 		LOGIN: 'LOGIN',
@@ -25145,6 +25143,8 @@
 		if (payload) options.body = isJson ? JSON.stringify(payload) : payload;
 	
 		return (0, _isomorphicFetch2.default)(url + '/' + endpoint, options).then(function (response) {
+			console.log("sdff");
+			console.log(response);
 			if (response.status === 200) {
 				return response.headers.get('Content-Type').indexOf('json') > 0 ? response.json() : response.text();
 			} else {
@@ -26166,6 +26166,8 @@
 			return (0, _actions.resource)('GET', 'articles').then(function (r) {
 				// console.log(r)
 				dispatch(updateArticles(r.articles));
+			}).catch(function (err) {
+				console.log(err);
 			});
 		};
 	}
@@ -26175,18 +26177,36 @@
 		};
 	};
 	
-	function addArticles(author, article, img) {
+	// export function addArticles(author, article, img){
+	// 	return (dispatch) => {
+	// 		let fd = new FormData()
+	// 		fd.append('text', article)
+	// 		if(img){
+	// 			fd.append('image', img)
+	// 		}
+	// 		console.log(fd.text)
+	//     	resource('POST', 'article', fd, false)
+	// 		// resource('GET', 'articles')
+	// 		.then((r) => {
+	// 			console.log(r)
+	// 			Promise.all(
+	// 				[dispatch({type: Action.ADD_ARTICLE, article: r.articles[0]}),
+	// 				dispatch(fetchArticles())]
+	// 			).then((res)=>{
+	// 			dispatch(showSuccess('New article added successfully'))
+	// 			})
+	// 		})
+	// 	}
+	// }
+	function addArticles(author, article) {
 		return function (dispatch) {
-			var fd = new FormData();
-			fd.append('text', article);
-			fd.append('image', img);
-			(0, _actions.resource)('POST', 'article', fd, false)
+			(0, _actions.resource)('POST', 'article', { text: article })
 			// resource('GET', 'articles')
 			.then(function (r) {
 				console.log(r);
-				dispatch({ type: _actions2.default.ADD_ARTICLE, article: r.articles[0] });
-				dispatch(fetchArticles());
-				dispatch((0, _actions.showSuccess)('New article added successfully'));
+				Promise.all([dispatch({ type: _actions2.default.ADD_ARTICLE, article: r.articles[0] }), dispatch(fetchArticles())]).then(function (res) {
+					dispatch((0, _actions.showSuccess)('New article added successfully'));
+				});
 			});
 		};
 	}
@@ -26194,10 +26214,11 @@
 		return function (dispatch) {
 			console.log(text);
 			(0, _actions.resource)('PUT', 'articles/' + id, { text: text }).then(function (r) {
-				console.log(r);
-				dispatch({ type: 'EDIT_ARTICLE', article: r.articles[0] });
-				dispatch(fetchArticles());
-				dispatch((0, _actions.showSuccess)('Edited successfully'));
+				Promise.all([dispatch({ type: 'EDIT_ARTICLE', article: r.articles[0] }), dispatch(fetchArticles())]).then(function (res) {
+					dispatch((0, _actions.showSuccess)('Edited successfully'));
+				});
+			}).catch(function (err) {
+				console.log(err);
 			});
 		};
 	}
@@ -26205,13 +26226,17 @@
 		return function (dispatch) {
 			console.log(id);
 			var payload = { text: text };
-			payload.commentId = commentId;
-			console.log(commentId);
+			console.log(payload);
+			if (commentId) {
+				payload.commentId = commentId;
+				console.log(commentId);
+			}
 			(0, _actions.resource)('PUT', 'articles/' + id, payload).then(function (r) {
-				console.log(r);
-				dispatch({ type: 'EDIT_ARTICLE', article: r.articles[0] });
-				dispatch(fetchArticles());
-				dispatch((0, _actions.showSuccess)('Comment updated successfully'));
+				Promise.all([dispatch({ type: 'EDIT_ARTICLE', article: r.articles[0] }), dispatch(fetchArticles())]).then(function (res) {
+					dispatch((0, _actions.showSuccess)('Comment updated successfully'));
+				});
+			}).catch(function (err) {
+				console.log(err);
 			});
 		};
 	}
@@ -26353,7 +26378,6 @@
 	
 	    var newComm = void 0;
 	    var _addComm = function _addComm() {
-	        console.log(newComm.value);
 	        updateComment(articleId, newComm.value, -1);
 	        newComm.value = '';
 	    };
@@ -26670,7 +26694,7 @@
 			if (newPsw) {
 				(0, _actions.resource)('PUT', 'password', { password: newPsw }).then(function (r) {
 					dispatch({ type: _actions2.default.UPDATE_PROFILE, password: r.password });
-					dispatch((0, _actions.showSuccess)('Password will not change'));
+					dispatch((0, _actions.showSuccess)('Password updated successfully'));
 				});
 			}
 		};
@@ -26932,22 +26956,27 @@
 				}, {});
 				var followerSet = r.following.join(',');
 				var foHeadline = (0, _actions.resource)('GET', 'headlines/' + followerSet).then(function (headR) {
-					// console.log(headR)
+	
 					headR.headlines.forEach(function (element) {
-						followers[element.username].headline = element.headline;
+						if (element && element.length > 0) {
+							followers[element.username].headline = element.headline;
+						}
 					});
 					return headR;
 				});
-	
 				var foAvatar = (0, _actions.resource)('GET', 'avatars/' + followerSet).then(function (avatarR) {
 					avatarR.avatars.forEach(function (element) {
-						followers[element.username].avatar = element.avatar;
+						if (element && element.length > 0) {
+							followers[element.username].avatar = element.avatar;
+						}
 					});
 					return avatarR;
 				});
 				return Promise.all([foHeadline, foAvatar]).then(function () {
 					// console.log(followers)
 					dispatch({ type: _actions2.default.UPDATE_FOLLOWER, followers: followers });
+				}).catch(function (err) {
+					dispatch((0, _actions.showError)("Invalid follower"));
 				});
 			});
 		};
@@ -26964,20 +26993,26 @@
 				var followerSet = r.following.join(',');
 				var foHeadline = (0, _actions.resource)('GET', 'headlines/' + followerSet).then(function (headR) {
 					headR.headlines.forEach(function (element) {
-						followers[element.username].headline = element.headline;
+						if (element && element.length > 0) {
+							followers[element.username].headline = element.headline;
+						}
 					});
 					return headR;
 				});
 	
 				var foAvatar = (0, _actions.resource)('GET', 'avatars/' + followerSet).then(function (avatarR) {
 					avatarR.avatars.forEach(function (element) {
-						followers[element.username].avatar = element.avatar;
+						if (element && element.length > 0) {
+							followers[element.username].avatar = element.avatar;
+						}
 					});
 					return avatarR;
 				});
 				return Promise.all([foHeadline, foAvatar]).then(function () {
 					// console.log(followers)
 					dispatch({ type: _actions2.default.UPDATE_FOLLOWER, followers: followers });
+				}).catch(function (err) {
+					dispatch((0, _actions.showError)("Error deleting follower"));
 				});
 			});
 		};
@@ -26995,18 +27030,24 @@
 				var followerSet = r.following.join(',');
 				var foHeadline = (0, _actions.resource)('GET', 'headlines/' + followerSet).then(function (headR) {
 					headR.headlines.forEach(function (element) {
-						followers[element.username].headline = element.headline;
+						if (element && element.length > 0) {
+							followers[element.username].headline = element.headline;
+						}
 					});
 					return headR;
 				});
 				var foAvatar = (0, _actions.resource)('GET', 'avatars/' + followerSet).then(function (avatarR) {
 					avatarR.avatars.forEach(function (element) {
-						followers[element.username].avatar = element.avatar;
+						if (element && element.length > 0) {
+							followers[element.username].avatar = element.avatar;
+						}
 					});
 					return avatarR;
 				});
 				return Promise.all([foHeadline, foAvatar]).then(function () {
 					dispatch({ type: _actions2.default.UPDATE_FOLLOWER, followers: followers });
+				}).catch(function (err) {
+					dispatch((0, _actions.showError)("No such follower"));
 				});
 			});
 		};
@@ -27110,9 +27151,11 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function login(username, password) {
+	
 		return function (dispatch) {
+	
 			return (0, _actions.resource)('POST', 'login', { username: username, password: password }).then(function (r) {
-				dispatch({ type: _actions2.default.LOGIN, username: r.username });
+				dispatch({ type: _actions2.default.LOGIN, username: r.username, password: r.password });
 				dispatch((0, _actions.showSuccess)("Login successfully"));
 				// console.log(username)
 				dispatch(preLog(username));
@@ -27142,6 +27185,7 @@
 	
 	function registerCheck(username, email, phone, birth, zipcode, password, pwconf) {
 		return function (dispatch) {
+			console.log(birth);
 			if (!(username && email && phone && birth && zipcode && password && pwconf)) {
 				return dispatch((0, _actions.showError)("Registration information not complete"));
 			}

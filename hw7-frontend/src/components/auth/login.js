@@ -49,7 +49,7 @@ export default connect(
 	null,
 	(dispatch)=>{
         return{
-            login: (username, password)=> dispatch(login(username, password))
+            login: (username, password)=>dispatch(login(username, password))
         }
     }
 )(Login)

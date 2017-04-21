@@ -93,7 +93,7 @@ export function updateProfile( newEmail, newZip,  newPsw, newPwconf){
 			resource('PUT','password',{password:newPsw})
 			.then((r)=>{
 				dispatch({type: Action.UPDATE_PROFILE, password: r.password})
-				dispatch(showSuccess('Password will not change'))
+				dispatch(showSuccess('Password updated successfully'))
 			})
 		}
 	}

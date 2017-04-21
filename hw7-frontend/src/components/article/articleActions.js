@@ -18,7 +18,9 @@ export function fetchArticles(){
 	.then((r)=>{
 		// console.log(r)
 		dispatch(updateArticles(r.articles))
-	})
+	}).catch((err)=>{
+            console.log(err)
+        })
 }
 export const displayComment=(id)=>{
 	return (dispatch) =>{
@@ -26,18 +28,39 @@ export const displayComment=(id)=>{
 	}
 }
 
-export function addArticles(author, article, img){
+// export function addArticles(author, article, img){
+// 	return (dispatch) => {
+// 		let fd = new FormData()
+// 		fd.append('text', article)
+// 		if(img){
+// 			fd.append('image', img)
+// 		}
+// 		console.log(fd.text)
+//     	resource('POST', 'article', fd, false)
+// 		// resource('GET', 'articles')
+// 		.then((r) => {
+// 			console.log(r)
+// 			Promise.all(
+// 				[dispatch({type: Action.ADD_ARTICLE, article: r.articles[0]}),
+// 				dispatch(fetchArticles())]
+// 			).then((res)=>{
+// 			dispatch(showSuccess('New article added successfully'))
+// 			})
+// 		})
+// 	}
+// }
+export function addArticles(author, article){
 	return (dispatch) => {
-		let fd = new FormData()
-		fd.append('text', article)
-		fd.append('image', img)
-    	resource('POST', 'article', fd, false)
+    	resource('POST', 'article', {text:article})
 		// resource('GET', 'articles')
 		.then((r) => {
 			console.log(r)
-			dispatch({type: Action.ADD_ARTICLE, article: r.articles[0]})
-			dispatch(fetchArticles())
+			Promise.all(
+				[dispatch({type: Action.ADD_ARTICLE, article: r.articles[0]}),
+				dispatch(fetchArticles())]
+			).then((res)=>{
 			dispatch(showSuccess('New article added successfully'))
+			})
 		})
 	}
 }
@@ -46,10 +69,14 @@ export function editArticle(id, text){
         console.log(text)
         resource('PUT', `articles/${id}`, {text : text})
         .then((r)=>{
-			console.log(r)
-            dispatch({type:'EDIT_ARTICLE',article: r.articles[0]})
-			dispatch(fetchArticles())
-            dispatch(showSuccess('Edited successfully'))
+			Promise.all([
+				 dispatch({type:'EDIT_ARTICLE',article: r.articles[0]}),
+				dispatch(fetchArticles())]
+			).then((res)=>{
+				dispatch(showSuccess('Edited successfully'))
+			})
+        }).catch((err)=>{
+            console.log(err)
         })
     }
 }
@@ -57,14 +84,22 @@ export function updateComment(id, text, commentId){
     return (dispatch) => {
 		console.log(id)
 		let payload = {text : text}
-		payload.commentId = commentId
-		console.log(commentId)
+		console.log(payload)
+		if(commentId){
+			payload.commentId = commentId
+			console.log(commentId)
+		}
         resource('PUT', `articles/${id}`, payload)
         .then((r)=>{
-			console.log(r)
-            dispatch({type:'EDIT_ARTICLE',article: r.articles[0]})
-			dispatch(fetchArticles())
-            dispatch(showSuccess('Comment updated successfully'))
+			Promise.all([
+				dispatch({type:'EDIT_ARTICLE',article: r.articles[0]}),
+				dispatch(fetchArticles())
+			]).then((res)=>{
+				dispatch(showSuccess('Comment updated successfully'))
+			})
+        })
+		.catch((err)=>{
+            console.log(err)
         })
     }
 }

@@ -5,7 +5,6 @@ import {updateComment} from './articleActions'
 export const NewComment = ({articleId,CommentId, showComment,updateComment})=> {
     let newComm
     const _addComm=()=>{
-        console.log(newComm.value)
         updateComment(articleId, newComm.value, -1)
         newComm.value=''
     }

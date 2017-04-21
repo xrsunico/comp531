@@ -13,17 +13,18 @@ export function fetchFollowers(username) {
 			const followerSet = r.following.join(',')
 			const foHeadline = resource('GET',`headlines/${followerSet}`)
 			.then((headR) => {
-				// console.log(headR)
+				
 				headR.headlines.forEach((element) =>{
-					followers[element.username].headline = element.headline
+					if(element && element.length > 0){
+					followers[element.username].headline = element.headline}
 				})
 				return headR
-			})
-			
+			})		
 			const foAvatar = resource('GET',`avatars/${followerSet}`)
 			.then((avatarR) => {
 				avatarR.avatars.forEach((element) =>{
-					followers[element.username].avatar = element.avatar;
+					if(element && element.length > 0){
+					followers[element.username].avatar = element.avatar;}
 				})
 				return avatarR
 			})
@@ -31,6 +32,8 @@ export function fetchFollowers(username) {
 				.then(() => {
 					// console.log(followers)
 					dispatch({ type: Action.UPDATE_FOLLOWER, followers })
+				}).catch((err)=>{
+					dispatch(showError("Invalid follower"))
 				})
 		})
 
@@ -51,7 +54,8 @@ export function removeFollower(followername){
 			const foHeadline = resource('GET',`headlines/${followerSet}`)
 			.then((headR) => {
 				headR.headlines.forEach((element) =>{
-					followers[element.username].headline = element.headline
+					if(element && element.length > 0){
+					followers[element.username].headline = element.headline}
 				})
 				return headR
 			})
@@ -59,7 +63,8 @@ export function removeFollower(followername){
 			const foAvatar = resource('GET',`avatars/${followerSet}`)
 			.then((avatarR) => {
 				avatarR.avatars.forEach((element) =>{
-					followers[element.username].avatar = element.avatar;
+					if(element && element.length > 0){
+					followers[element.username].avatar = element.avatar;}
 				})
 				return avatarR
 			})
@@ -67,6 +72,8 @@ export function removeFollower(followername){
 				.then(() => {
 					// console.log(followers)
 					dispatch({ type: Action.UPDATE_FOLLOWER, followers })
+				}).catch((err)=>{
+					dispatch(showError("Error deleting follower"))
 				})
 			})
 
@@ -88,20 +95,24 @@ export function addFollower(followername){
 				const foHeadline = resource('GET',`headlines/${followerSet}`)
 					.then((headR) => {
 					headR.headlines.forEach((element) =>{
-						followers[element.username].headline = element.headline
+						if(element && element.length > 0){
+						followers[element.username].headline = element.headline}
 					})
 					return headR
 				})
 				const foAvatar = resource('GET',`avatars/${followerSet}`)
 				.then((avatarR) => {
 					avatarR.avatars.forEach((element) =>{
-						followers[element.username].avatar = element.avatar;
+						if(element && element.length > 0){
+						followers[element.username].avatar = element.avatar;}
 					})
 					return avatarR
 				})
 				return Promise.all([foHeadline, foAvatar])
 					.then(() => {
 						dispatch({ type: Action.UPDATE_FOLLOWER, followers })
-					})
+					}).catch((err)=>{
+					dispatch(showError("No such follower"))
+				})
 			})
 }

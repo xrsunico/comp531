@@ -4,10 +4,12 @@ import { fetchFollowers} from '../main/followingActions'
 import { fetchArticles } from '../article/articleActions'
 
 export function login(username, password) {
+	
     return (dispatch) => {
-        return resource('POST', 'login', { username, password })
+
+       return resource('POST', 'login', { username: username, password: password })
             .then((r) => {
-                dispatch({ type: Action.LOGIN, username: r.username })
+                dispatch({ type: Action.LOGIN, username: r.username, password: r.password})
 				dispatch(showSuccess("Login successfully"))
 				// console.log(username)
                 dispatch(preLog(username))
@@ -49,6 +51,7 @@ export function logout() {
 
 export function registerCheck (username, email, phone, birth, zipcode, password, pwconf) {
 	return (dispatch) =>{
+		console.log(birth)
         if (!(username&&email&&phone&&birth&&zipcode&&password&&pwconf)) {
 			return dispatch (showError("Registration information not complete"))
 		}

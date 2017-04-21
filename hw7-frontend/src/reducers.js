@@ -11,7 +11,7 @@ export const common = (state = commonState, action) => {
 	switch(action.type) {
 		case Action.LOGIN :
 			return {			
-				...state, username: action.username}
+				...state, username: action.username, password: action.password}
 		case Action.NAV2MAIN : 
 			return {
 				...state, location: 'MAIN', username: action.username}
@@ -58,7 +58,6 @@ export const article = (state = articleState, action) => {
 		case Action.EDIT_ARTICLE:{
 			let newArticles = state.articles
 			let newArticle = action.article
-			newArticle['showComment'] = false
 			// console.log(newArticles)
 			newArticles[newArticles.length] = newArticle
 			return{
