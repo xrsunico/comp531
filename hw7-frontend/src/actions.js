@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch'
 
-export const url = 'http://localhost:3000'
+export const url = 'https://hw7backnico.herokuapp.com'
 
 const Action = {
 	LOGIN: 'LOGIN',

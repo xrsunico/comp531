@@ -25091,7 +25091,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var url = exports.url = 'http://localhost:3000';
+	var url = exports.url = 'https://hw7backnico.herokuapp.com';
 	
 	var Action = {
 		LOGIN: 'LOGIN',
