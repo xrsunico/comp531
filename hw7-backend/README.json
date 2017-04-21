@@ -1,4 +1,5 @@
 {
     "netid":"rx4",
+    "frontend": "http://bouncy-queen.surge.sh/",
     "backend":"https://hw7backnico.herokuapp.com"
 }
