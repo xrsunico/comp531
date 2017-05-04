@@ -1,0 +1,5 @@
+{
+  "netid": "rx4",
+  "frontend": "http://stale-vein.surge.sh",
+  "backend": "https://newhw8.herokuapp.com"
+}
