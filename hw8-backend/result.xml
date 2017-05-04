@@ -1,0 +1,13 @@
+
+> RiceBookServer@0.0.0 test /Users/Sunico/Documents/Rice/Spring17/531/comp531/hw6-backend
+> mocha --opts mocha.opts src/**/*.spec.js "--reporter" "xunit"
+
+[ { user: 'rx', headline: 'sample headline' } ]
+<testsuite name="Mocha Tests" tests="6" failures="0" errors="0" skipped="0" timestamp="Wed, 05 Apr 2017 23:18:13 GMT" time="0.096">
+<testcase classname="Validate Article" name="should GET articles" time="0.036"/>
+<testcase classname="Validate Article" name="should POST a new article" time="0.031"/>
+<testcase classname="Validate Article" name="should increase the number of articles by one" time="0.006"/>
+<testcase classname="Validate Profile" name="should GET headlines" time="0.006"/>
+<testcase classname="Validate Profile" name="should POST a new article" time="0.005"/>
+<testcase classname="Validate Profile" name="should GET headline for rx" time="0.009"/>
+</testsuite>
